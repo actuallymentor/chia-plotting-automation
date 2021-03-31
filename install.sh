@@ -8,6 +8,7 @@ bash ./vps/03-zsh.sh && \
 bash ./vps/04-swap.sh && \
 
 # Install Chia
+cd && \
 git clone https://github.com/Chia-Network/chia-blockchain.git && \
 cd chia-blockchain && \
 
@@ -15,7 +16,7 @@ sh install.sh && \
 
 . ./activate && \
 
-chia init && \
+chia init && cd && \
 
 curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install done&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json || \
 

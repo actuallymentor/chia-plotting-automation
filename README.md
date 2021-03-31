@@ -6,7 +6,7 @@
 1. Create a `.env`, see section below
 1. Run `nohup zsh ./everplot.zsh & disown`
 
-You can follow the progress with `tail -f nohup.out` and kill the process by running `kill -9 PID` where PIDs can be found using `ps aux | grep nohup`
+You can follow the progress with `tail -f nohup.out` and kill the process by running `kill -9 PID` where PIDs can be found using `ps aux | grep everplot`
 
 The script will:
 

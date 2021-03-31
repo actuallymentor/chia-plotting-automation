@@ -12,6 +12,9 @@ while [ "$goon" = true ]; do
 		goon=false
 	fi
 
+	# Sleep a minute in case we are running interactive
+	sleep 60
+
 done
 
 curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Everplot STOPPED&message=Everplot at $myip ended&url=&priority=1" https://api.pushover.net/1/messages.json
