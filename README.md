@@ -8,7 +8,7 @@
     - Make local private key
 1. Run `nohup zsh ./everplot.zsh & disown`
 
-Alternatively you may use `zsh _setup-remote.zsh`.
+Alternatively you may use `zsh _setup-remote.zsh ip.of.remote.server`.
 
 You can follow the progress with `tail -f nohup.out` and kill the process by running `kill -9 PID` where PIDs can be found using `ps aux | grep everplot`
 
