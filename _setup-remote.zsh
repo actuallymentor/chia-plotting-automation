@@ -7,5 +7,4 @@ source "${0:a:h}/.env" && \
 ssh-keyscan $1 >> ~/.ssh/known_hosts && \
 rsync -zvP $offlinesshkey root@$1:~/chiafarmer && \
 rsync -zvP "${0:a:h}/.env" root@$1:~/.env && \
-ssh -t root@$1 "git clone https://github.com/actuallymentor/chia-plotting-automation.git && mv .env ~/chia-plotting-automation && cd chia-plotting-automation && echo 'Ready to bash install.sh && nohup zsh ./everplot.zsh & disown' && /bin/bash -i"
-echo "Something went wrong"
+ssh -t root@$1 "git clone https://github.com/actuallymentor/chia-plotting-automation.git && mv .env ~/chia-plotting-automation && cd chia-plotting-automation && echo -e 'Ready to ssh root@$1\nbash install.sh\nnohup zsh ./everplot.zsh & disown'"
