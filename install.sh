@@ -16,7 +16,7 @@ sh install.sh && \
 
 . ./activate && \
 
-chia init && cd && \
+chia init && \
 
 curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install done&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json || \
 

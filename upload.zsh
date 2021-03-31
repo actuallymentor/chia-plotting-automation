@@ -1,8 +1,9 @@
-plotfile=$( ls /mnt/volume* | grep plot )
+source source "${0:a:h}/.env" && \
+plotfile=$( ls /mnt/volume* | grep plot ) && \
 
 # Trust the remote server and import ssh key
-ssh-keyscan $remoteserver >> ~/.ssh/known_hosts
-ssh-add $sshkey
+ssh-keyscan $remoteserver >> ~/.ssh/known_hosts && \
+ssh-add $sshkey && \
 
 echo "[ $( date ) ] Starting upload" >> ~/chia.download.log && \
 # Copy with -z compression, -v verbosity, -P progress

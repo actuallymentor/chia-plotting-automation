@@ -1,10 +1,10 @@
 #!/bin/zsh
 
 # Load environment variables
-source ./.env
+source "${0:a:h}/.env"
 
-cd ~/chia-blockchain && \
-. ./activate && \
+# Activate chia
+. ~/chia-blockchain/activate && \
 
 # Data settings
 plotdir=$( df -h | grep -Po "/mnt/volume.*" )

@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 goon=true
-source ./.env
+source "${0:a:h}/.env"
 while [ "$goon" = true ]; do
 	zsh ./plot.zsh
 	zsh ./upload.zsh
