@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Load environment variables
 source ./.env
 

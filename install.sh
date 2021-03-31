@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source ./.env && \
 apt update && \
 
@@ -15,6 +17,6 @@ sh install.sh && \
 
 chia init && \
 
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install donw&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json || \
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install done&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json || \
 
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install FAILED&message=Go fix it&url=&priority=1" https://api.pushover.net/1/messages.json
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install failed&message=Go fix it&url=&priority=1" https://api.pushover.net/1/messages.json

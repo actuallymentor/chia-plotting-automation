@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 goon=true
 source ./.env
 while [ "$goon" = true ]; do
