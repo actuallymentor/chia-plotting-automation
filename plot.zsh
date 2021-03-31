@@ -20,7 +20,7 @@ ksize=32
 
 echo "[ $(date) ] - Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> ~/chia.log
 
-chia plots create -e -b $memorybuffer -r $threads -k $ksize -n $amountofplots -d $plotdir -t $tempdir -f $publicfarmerkey -p $publicchiakey && \
+chia plots create -e -b $memorybuffer -r $threads -k $ksize -n $amountofplots -d $plotdir -t $tempdir -f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey && \
 rm "$tempdir/*.tmp" && \
 
 # Success noti

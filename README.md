@@ -24,6 +24,7 @@ myip=$( curl icanhazip.com )
 # see chia keys show
 publicfarmerkey= 
 publicchiakey=
+poolfarmerkey=
 
 # For pushover notifications, mandatory for not but you can strip it out
 pushover_user=
