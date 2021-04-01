@@ -66,7 +66,7 @@ sshkey="$HOME/chiafarmer" # for use on the plotting machine, this is where to pu
 offlinesshkey="$HOME/.ssh/chiafarmer" # for use in _setup-remote.zsh, so this is your LOCAL privatekey location
 
 # Plotting configuration
-logfile='~/everplot.log'
+logfile="$HOME/everplot.log"
 plotdir=$( df -h | grep -Po "/mnt/volume.*" )
 tempdir=$( df -h | grep -Po "/mnt/volume.*" )
 amountofplots=1
