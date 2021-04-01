@@ -35,7 +35,8 @@ pushover_user=
 pushover_token=
 
 # Credentials and config of your farmer, make sure to have the SSH key installed there
-remotefolder=
+remotedownloadfolder=
+remoteplotfolder=
 sshkey= # This is a path, not a string
 remoteserver=
 remoteuser=
