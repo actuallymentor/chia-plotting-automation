@@ -50,7 +50,6 @@ chia init && \
 
 cd ~/chia-plotting-automation && \
 
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install done&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json && \
-zsh || \
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install done&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json || \
 
 curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install failed&message=Go fix it&url=&priority=1" https://api.pushover.net/1/messages.json
