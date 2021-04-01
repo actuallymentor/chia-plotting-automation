@@ -8,27 +8,29 @@ maxwaitcount=10
 echo -e "\n[ $( date ) ]  Does this log confuse you? You probably forgot to enable monitoring, see https://www.digitalocean.com/docs/monitoring/how-to/install-agent/#during-creation. Don't worry, this operation will time out after a few minutes, just go make tea.\n"
 while [ "$waitingforinstall" = true ]; do
 
-	echo "[ $( date ) ] waiting for DO agent to be installed"
-	sleep $waitdurationinseconds
-
 	# Check if DO utility finished installing
 	if apt-cache policy do-agent | grep -qPo "Installed: \d+"; then
 		waitingforinstall=false
 		echo "[ $( date ) ] DO agent installed, continuing"
+	else
+		
+		echo "[ $( date ) ] waiting for DO agent to be installed"
+		sleep $waitdurationinseconds
+
+		# Increment wait cound
+		((waitcount=waitcount+1))
+
+		# If wait count was exceeded, just continue
+		if (( $waitcount > $maxwaitcount )); then
+			echo "[ $( date ) ] DO wait timed out, continuing"
+			waitingforinstall=false
+		fi
 	fi
 
-	# Increment wait cound
-	((waitcount=waitcount+1))
-
-	# If wait count was exceeded, just continue
-	if (( $waitcount > $maxwaitcount )); then
-		echo "[ $( date ) ] DO wait timed out, continuing"
-		waitingforinstall=false
-	fi
 
 done
 
-source ./.env && \
+source ~/.env && \
 apt update && \
 
 git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps && \
