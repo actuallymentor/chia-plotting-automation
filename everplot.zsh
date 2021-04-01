@@ -5,7 +5,7 @@ goon=true
 count=1
 source "${0:a:h}/.env"
 
-echo "[ $( date ) ] - starting everplot" >> $logfile
+echo "[ $( date ) ] starting everplot" >> $logfile
 
 while [ "$goon" = true ]; do
 

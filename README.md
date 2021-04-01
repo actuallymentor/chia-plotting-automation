@@ -33,10 +33,20 @@ Assumptions: you have a locally populated `.env` of which all file references ex
 
 1. Create 2vCPU/4GB VPS with 500GB volume
 2. Locally run `zsh _setup-remote.zsh the.ip.of.remote`
-3. On remote machine run
-    - `cd chia-plotting-automation`
-    - `bash install.sh`
-    - `nohup zsh ./everplot.zsh & disown`
+3. On remote machine run:
+
+```shell
+# installation of chia
+cd ~/chia-plotting-automation
+bash install.sh
+
+# Start everplot
+nohup zsh ./everplot.zsh & disown
+
+# Optional log checks:
+cat ~/everplot.log
+tail -f nohup.out
+```
 
 ## Monitoring
 
