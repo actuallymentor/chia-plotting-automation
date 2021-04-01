@@ -9,6 +9,8 @@ Assumptions:
 ## Manual usage
 
 1. Create 2vCPU/4GB VPS with 500GB volume
+    - recommended: choose close data center
+    - recommended: enable additional monitoring
 1. `ssh` into it
 1. Clone this repo git `git clone https://github.com/actuallymentor/chia-plotting-automation.git`
 1. Run `bash ./install.sh`
