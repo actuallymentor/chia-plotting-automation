@@ -8,4 +8,5 @@ ssh-keyscan $1 >> ~/.ssh/known_hosts && \
 rsync -zvP $offlinesshkey root@$1:~/chiafarmer && \
 rsync -zvP "${0:a:h}/.env" root@$1:~/.env && \
 ssh root@$1 "git clone https://github.com/actuallymentor/chia-plotting-automation.git && mv .env ~/chia-plotting-automation && cd chia-plotting-automation && echo -e 'Ready to ssh root@$1 # servername'" && \
-ssh -t root@$1 "cd ~/chia-plotting-automation && /bin/bash install.sh && nohup zsh ./everplot.zsh & disown && zsh"
+ssh root@$1 "cd ~/chia-plotting-automation && /bin/bash install.sh && nohup zsh ./everplot.zsh & disown" && \
+echo "Setup for root@$1 complete"
