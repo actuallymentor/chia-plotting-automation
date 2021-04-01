@@ -1,5 +1,33 @@
 #!/bin/bash
 
+# Check if the digital ocean monitor was installed yet
+waitingforinstall=true
+waitcount=0
+waitdurationinseconds=30
+maxwaitcount=10
+while [ "$waitingforinstall" = true ]; do
+
+	echo "[ $( date ) ] waiting for DO agent to be installed"
+	echo "[ $( date ) ]  Does this log confuse you? You probably forgot to enable monitoring, see https://www.digitalocean.com/docs/monitoring/how-to/install-agent/#during-creation. Don't worry, this operation will time out after a few minutes, just go make tea."
+	sleep $waitdurationinseconds
+
+	# Check if DO utility finished installing
+	if apt-cache policy do-agent | grep -qPo "Installed: \d+"; then
+		waitingforinstall=false
+		echo "[ $( date ) ] DO agent installed, continuing"
+	fi
+
+	# Increment wait cound
+	((waitcount=waitcount+1))
+
+	# If wait count was exceeded, just continue
+	if (( $waitcount > $maxwaitcount )); then
+		echo "[ $( date ) ] DO wait timed out, continuing"
+		waitingforinstall=false
+	fi
+
+done
+
 source ./.env && \
 apt update && \
 
