@@ -13,7 +13,7 @@ while [ "$waitingforinstall" = true ]; do
 		waitingforinstall=false
 		echo "[ $( date ) ] DO agent installed, continuing"
 	else
-		
+
 		echo "[ $( date ) ] waiting for DO agent to be installed"
 		sleep $waitdurationinseconds
 
@@ -30,7 +30,7 @@ while [ "$waitingforinstall" = true ]; do
 
 done
 
-source ~/.env && \
+source ./.env && \
 apt update && \
 
 git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps && \

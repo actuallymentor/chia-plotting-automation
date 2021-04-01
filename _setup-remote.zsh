@@ -9,7 +9,7 @@ echo "Copying files to remote" && \
 rsync -zvP $offlinesshkey root@$1:~/chiafarmer && \
 rsync -zvP "${0:a:h}/.env" root@$1:~/.env && \
 echo "Sending scripts to remote" && \
-ssh root@$1 "git clone https://github.com/actuallymentor/chia-plotting-automation.git && mv .env ~/chia-plotting-automation && cd chia-plotting-automation" && \
+ssh root@$1 "git clone https://github.com/actuallymentor/chia-plotting-automation.git && cp .env ~/chia-plotting-automation" && \
 echo "Starting remote setup" && \
 ssh -t root@$1 "/bin/bash ~/chia-plotting-automation/install.sh" && \
 echo "Starting remote plotter" && \
