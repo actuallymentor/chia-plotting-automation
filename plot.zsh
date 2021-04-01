@@ -19,9 +19,9 @@ chia plots create -e -b $memorybuffer -r $threads -k $ksize -n $amountofplots -d
 rm "$tempdir/*.tmp" || echo "No temporary files" && \
 
 # Success noti
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia&message=plot done&url=&priority=1" https://api.pushover.net/1/messages.json || \
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia&message=plot done at $myip&url=&priority=1" https://api.pushover.net/1/messages.json || \
 
 # Fail noti
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia&message=X PLOT ERROR&url=&priority=1" https://api.pushover.net/1/messages.json && \
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia&message=plot error at $myip&url=&priority=1" https://api.pushover.net/1/messages.json && \
 
 echo "[ $(date) ] - Done creating Chia plot at $plotdir" >> ~/chia.log

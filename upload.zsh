@@ -6,12 +6,20 @@ chmod 600 $sshkey && \
 eval `ssh-agent -s` && ssh-keyscan $remoteserver >> ~/.ssh/known_hosts && \
 ssh-add $sshkey && \
 
-echo "[ $( date ) ] Starting upload" >> ~/chia.download.log && \
-# Copy with -z compression, -v verbosity, -P progress
-rsync -zvP $plotdir/$plotfile "$remoteuser@$remoteserver:$remotedownloadfolder" && \
-ssh $remoteuser@$remoteserver "mv $remotedownloadfolder/* $remoteplotfolder" && \
-rm $plotdir/$plotfile && \
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia upload success&message=Plot added from $myip&url=&priority=1" https://api.pushover.net/1/messages.json || \
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia upload failed&message=Plot download error from $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+echo "[ $( date ) ] starting upload of $plotfile" >> $logfile && \
+# Copy without -z compression, -v verbosity, -P progress
+rsync -vP $plotdir/$plotfile "$remoteuser@$remoteserver:$remotedownloadfolder" && \
+echo "[ $( date ) ] completed upload of $plotfile" >> $logfile && \
 
-echo "[ $( date ) ] Upload process complete" >> ~/chia.download.log
+# Move the remote file from download folder to farming folder
+ssh $remoteuser@$remoteserver "mv $remotedownloadfolder/* $remoteplotfolder" && \
+echo "[ $( date ) ] completed moving of $plotfile" >> $logfile && \
+
+# Delete local plotfile
+rm $plotdir/$plotfile && \
+
+# Notify via push noti
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia upload success&message=Plot added at $myip&url=&priority=1" https://api.pushover.net/1/messages.json || \
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia upload failed&message=Plot download error at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+
+echo "[ $( date ) ] ended upload process of $plotfile" >> $logfile
