@@ -32,10 +32,13 @@ done
 
 source ./.env && \
 apt update && \
+rm -f $plotdir/* &&\
 
 git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps && \
 bash ./vps/03-zsh.sh && \
 bash ./vps/04-swap.sh && \
+
+echo "[ $( date ) ] shell setup complete" >> $logfile && \
 
 # Install Chia
 cd && \
@@ -48,8 +51,6 @@ sh install.sh && \
 
 chia init && \
 
-cd ~/chia-plotting-automation && \
+echo "[ $( date ) ] chia installation complete" >> $logfile
 
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install done&message=Continuing&url=&priority=1" https://api.pushover.net/1/messages.json || \
-
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Install failed&message=Go fix it&url=&priority=1" https://api.pushover.net/1/messages.json
+cd ~/chia-plotting-automation

@@ -13,15 +13,12 @@ threads=$( getconf _NPROCESSORS_ONLN )
 memorybuffer=$( echo $restMiBAfter512MBRemoved ) # in MiBs, 4608 is default which is 4832 MB which is 4.84 GB
 ksize=32
 
-echo "[ $(date) ] - Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> ~/chia.log
+echo "[ $(date) ] - Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> $logfile
 
-chia plots create -e -b $memorybuffer -r $threads -k $ksize -n $amountofplots -d $plotdir -t $tempdir -f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey && \
-rm "$tempdir/*.tmp" || echo "No temporary files" && \
+chia plots create -e -b $memorybuffer -r $threads -k $ksize -n $amountofplots -d $plotdir -t $tempdir -f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey >> $plotlog && \
+rm "$tempdir/*.tmp" || echo "[ $(date) ] - No temporary files" >> $logfile && \
 
-# Success noti
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia&message=plot done at $myip&url=&priority=1" https://api.pushover.net/1/messages.json || \
+echo "[ $(date) ] - Done creating Chia plot at $plotdir" >> $logfile || \
 
-# Fail noti
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia&message=plot error at $myip&url=&priority=1" https://api.pushover.net/1/messages.json && \
-
-echo "[ $(date) ] - Done creating Chia plot at $plotdir" >> ~/chia.log
+echo "[ $(date) ] - Plot error $plotdir" >> $logfile && \
+curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting error at $myip&url=&priority=1" https://api.pushover.net/1/messages.json

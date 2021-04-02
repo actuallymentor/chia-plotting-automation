@@ -77,6 +77,7 @@ offlinesshkey="$HOME/.ssh/chiafarmer" # for use in _setup-remote.zsh, so this is
 
 # Plotting configuration
 logfile="$HOME/everplot.log"
+plotlog="$HOME/plot.log"
 plotdir=$( df -h | grep -Po "/mnt/volume.*" )
 tempdir=$( df -h | grep -Po "/mnt/volume.*" )
 amountofplots=1
