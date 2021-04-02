@@ -13,6 +13,9 @@ function handleError() {
 set -eE
 trap handleError EXIT
 
+# DO not error on no globbing match
+setopt +o nomatch
+
 echo "Setting up $1 with ${0:a:h}/.env " 
 ssh-keyscan $1 >> ~/.ssh/known_hosts 
 echo "Copying files to remote" 

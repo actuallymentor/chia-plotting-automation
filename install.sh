@@ -30,6 +30,9 @@ while [ "$waitingforinstall" = true ]; do
 
 done
 
+# DO not error on no globbing match
+setopt +o nomatch
+
 source ./.env
 apt update
 rm -f $plotdir/*.*

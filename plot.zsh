@@ -5,7 +5,7 @@ source "${0:a:h}/.env"
 
 function handleError() {
 	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
-	echo "[ $(date) ] - Plot error $1 at $plotdir" >> $logfile
+	echo "[ $(date) ] [ plot.zsh ] - Plot error $1 at $plotdir" >> $logfile
 	exit 1
 }
 
@@ -13,7 +13,8 @@ function handleError() {
 set -eE
 trap handleError EXIT TERM INT
 
-
+# DO not error on no globbing match
+setopt +o nomatch
 
 # Activate chia
 . $HOME/chia-blockchain/activate 
@@ -25,12 +26,12 @@ threads=$( getconf _NPROCESSORS_ONLN )
 memorybuffer=$( echo $restMiBAfter512MBRemoved ) # in MiBs, 4608 is default which is 4832 MB which is 4.84 GB
 ksize=32
 
-echo "[ $(date) ] - Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> $logfile
+echo "[ $(date) ] [ plot.zsh ] Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> $logfile
 
 if [ -v dryrun ]; then
 
 	# Create dummy chia files
-	echo "[ $( date ) ] dry run, making dummy files" >> $logfile
+	echo "[ $( date ) ] [ plot.zsh ] dry run, making dummy files" >> $logfile
 	echo "A temp file" >> "$tempdir/$( date ).plot.temp"
 	echo "A plot file" >> "$plotdir/$( date ).plot"
 
@@ -43,8 +44,8 @@ else
 
 fi
 
-echo "[ $(date) ] - Removing $( l $tempdir/*.tmp | wc -l ) tempfiles" >> $logfile
+echo "[ $(date) ] [ plot.zsh ] Removing $( l $tempdir/*.tmp | wc -l ) tempfiles" >> $logfile
 
-rm -f "$tempdir/*.tmp" || echo "[ $(date) ] - No temporary files" >> $logfile 
+rm -f "$tempdir/*.tmp" || echo "[ $(date) ] [ plot.zsh ] - No temporary files" >> $logfile 
 
-echo "[ $(date) ] - Done creating Chia plot at $plotdir" >> $logfile
+echo "[ $(date) ] [ plot.zsh ] Done creating Chia plot at $plotdir" >> $logfile
