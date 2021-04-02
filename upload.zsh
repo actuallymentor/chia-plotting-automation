@@ -11,7 +11,9 @@ function handleError() {
 set -eE
 trap handleError EXIT
 
-plotfile=$( ls /mnt/volume* | grep plot )
+# Get the plotfile
+plotfile=$( ls /mnt/volume* | grep -P -m 1 ".plot$" )
+echo "[ $( date ) ] there are $( ls /mnt/volume* | grep -P ".plot$" | wc -l ), choosing $plotfile" >> $logfile
 
 # Trust the remote server and import ssh key
 chmod 600 $sshkey
