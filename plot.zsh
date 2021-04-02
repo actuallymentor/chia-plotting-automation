@@ -4,7 +4,7 @@
 source "${0:a:h}/.env"
 
 # Activate chia
-. ~/chia-blockchain/activate && \
+. $HOME/chia-blockchain/activate && \
 
 # Performance settings
 restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - 512 )) )
