@@ -11,7 +11,7 @@ while [ "$goon" = true ]; do
 
 	# Create a plot synchronously
 	echo "[ $( date ) ] starting plot $count creation" >> $logfile
-	zsh ./plot.zsh
+	zsh "${0:a:h}/plot.zsh"
 
 	echo "[ $( date ) ] uploading plot $count to remote asynchronously" >> $logfile
 
@@ -19,7 +19,7 @@ while [ "$goon" = true ]; do
 		echo "[ $( date ) ] dry run, skipping upload and waiting 10 seconds" >> $logfile
 		sleep 10
 	else
-		nohup zsh ./upload.zsh & disown
+		nohup zsh "${0:a:h}/upload.zsh" & disown
 	fi
 	
 
