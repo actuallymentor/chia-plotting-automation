@@ -42,7 +42,7 @@ else
 
 fi
 
-echo "[ $(date) ] - Removing $( l $tempdir/*.tmp | wl-l ) tempfiles" >> $logfile
+echo "[ $(date) ] - Removing $( l $tempdir/*.tmp | wc -l ) tempfiles" >> $logfile
 
 rm "$tempdir/*.tmp" || echo "[ $(date) ] - No temporary files" >> $logfile 
 
