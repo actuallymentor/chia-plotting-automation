@@ -44,6 +44,6 @@ fi
 
 echo "[ $(date) ] - Removing $( l $tempdir/*.tmp | wc -l ) tempfiles" >> $logfile
 
-rm "$tempdir/*.tmp" || echo "[ $(date) ] - No temporary files" >> $logfile 
+rm -f "$tempdir/*.tmp" || echo "[ $(date) ] - No temporary files" >> $logfile 
 
 echo "[ $(date) ] - Done creating Chia plot at $plotdir" >> $logfile
