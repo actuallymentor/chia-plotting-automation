@@ -5,7 +5,7 @@ source "${0:a:h}/.env"
 
 function handleError() {
 	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
-	echo "[ $(date) ] [ plot.zsh ] - Plot error $1 at $plotdir" >> $logfile
+	echo "[ $(date) ] [ plot.zsh ] - Plot error $( caller ) at $plotdir" >> $logfile
 	exit 1
 }
 
