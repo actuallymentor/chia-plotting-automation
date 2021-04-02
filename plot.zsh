@@ -6,11 +6,12 @@ source "${0:a:h}/.env"
 function handleError() {
 	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
 	echo "[ $(date) ] - Plot error $1 at $plotdir" >> $logfile
+	exit 1
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
 set -eE
-trap handleError EXIT
+trap handleError EXIT TERM INT
 
 
 
@@ -26,7 +27,7 @@ ksize=32
 
 echo "[ $(date) ] - Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> $logfile
 
-if [ -z "$dryrun" ]; then
+if [ -v dryrun ]; then
 
 	# Create dummy chia files
 	echo "[ $( date ) ] dry run, making dummy files" >> $logfile
