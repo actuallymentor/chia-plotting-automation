@@ -14,7 +14,14 @@ while [ "$goon" = true ]; do
 	zsh ./plot.zsh
 
 	echo "[ $( date ) ] uploading plot $count to remote asynchronously" >> $logfile
-	nohup zsh ./upload.zsh & disown
+
+	if [ -z "$dryrun" ]; then
+		echo "[ $( date ) ] dry run, skipping upload and waiting 10 seconds" >> $logfile
+		sleep 10
+	else
+		nohup zsh ./upload.zsh & disown
+	fi
+	
 
 	# Increment plot counter and sleep for a minute
 	((count=count+1))
