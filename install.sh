@@ -30,27 +30,26 @@ while [ "$waitingforinstall" = true ]; do
 
 done
 
-source ./.env && \
-apt update && \
-rm -f $plotdir/* &&\
+source ./.env
+apt update
+rm -f $plotdir/*.*
 
-git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps && \
-bash ./vps/03-zsh.sh && \
-bash ./vps/04-swap.sh && \
+git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps
+bash ./vps/03-zsh.sh
+bash ./vps/04-swap.sh
 
-echo "[ $( date ) ] shell setup complete" >> $logfile && \
+echo "[ $( date ) ] shell setup complete" >> $logfile
 
 # Install Chia
-cd && \
-git clone https://github.com/Chia-Network/chia-blockchain.git && \
-cd chia-blockchain && \
+cd
+git clone https://github.com/Chia-Network/chia-blockchain.git
+cd chia-blockchain
 
-sh install.sh && \
+sh install.sh
 
-. ./activate && \
+. ./activate
 
-chia init && \
-
+chia init 
 echo "[ $( date ) ] chia installation complete" >> $logfile
 
 cd ~/chia-plotting-automation
