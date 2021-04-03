@@ -5,13 +5,13 @@
 source "${0:a:h}/.env"
 
 function handleError() {
-	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia setup failed&message=Setup error $( caller ) at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
 	echo "[ $(date) ] - Plot error $1 at $plotdir" >> $logfile
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
 set -eE
-trap handleError EXIT
+trap handleError ERR
 
 # DO not error on no globbing match
 setopt +o nomatch
