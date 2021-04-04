@@ -83,3 +83,7 @@ tempdir=$( df -h | grep -Po "/mnt/volume.*" )
 amountofplots=1
 
 ```
+
+## Dev notes
+
+Reset server storage: `rm -rf chia*; rm -f .env; rm -rf .chia; rm *.log; rm -rf vps; rm nohup.out; l`
