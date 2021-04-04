@@ -65,4 +65,4 @@ echo "[ $(date) ] [ plot.zsh ] Removing $( l $tempdir/*.tmp | wc -l ) tempfiles"
 
 rm -rf "$tempdir$subpath" || echo "[ $(date) ] [ plot.zsh ] - No temporary files" >> $logfile 
 
-echo "[ $(date) ] [ plot.zsh ] Done creating Chia plot at $plotdir$tempdir" >> $logfile
+echo "[ $(date) ] [ plot.zsh ] Done creating Chia plot at $plotdir$subpath" >> $logfile
