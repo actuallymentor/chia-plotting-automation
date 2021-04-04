@@ -38,6 +38,12 @@ if [ -v dryrun ]; then
 
 else
 
+	# Create relevant directory
+	echo "[ $(date) ] [ plot.zsh ] creating tempdir $tempdir$subpath" >> $logfile
+	mkdir -p $tempdir$subpath
+	echo "[ $(date) ] [ plot.zsh ] creating tempdir $plotdir$subpath" >> $logfile
+	mkdir -p $plotdir$subpath
+
 	# Create chia plot
 	chia plots create -e \
 		-b $(( $memorybuffer / $parallel )) \

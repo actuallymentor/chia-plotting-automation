@@ -32,7 +32,7 @@ ssh -t root@$1 "/bin/bash ~/chia-plotting-automation/install.sh"
 
 # Init plotter
 for ((instance=1; instance<=parallel; instance++)); do
-	echo "Starting remote plotter $i" 
+	echo "Starting remote plotter $instance" 
 	ssh -n root@$1 'nohup zsh $HOME/chia-plotting-automation/everplot.zsh $instance &> $HOME/nohup.out &'
 done
 
