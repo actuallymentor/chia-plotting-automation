@@ -27,7 +27,7 @@ threads=$( getconf _NPROCESSORS_ONLN )
 memorybuffer=$( echo $restMiBAfter512MBRemoved ) # in MiBs, 4608 is default which is 4832 MB which is 4.84 GB
 ksize=32
 
-echo "[ $(date) ] [ plot.zsh ] Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> $logfile
+echo "[ $(date) ] [ plot.zsh ] Starting Chia plotting with $(( $threads / $parallel )) threads / $(( $memorybuffer / $parallel )) MiB RAM" >> $logfile
 
 # Create relevant directory
 echo "[ $(date) ] [ plot.zsh ] creating tempdir $tempdir$subpath" >> $logfile
