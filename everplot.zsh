@@ -3,15 +3,19 @@
 # variables
 goon=true
 count=1
+instance=$1 # passed by setup script ar argv[0]
 source "${0:a:h}/.env"
 
 echo "[ $( date ) ] [ everplot.zsh ] starting everplot" >> $logfile
 
 while [ "$goon" = true ]; do
 
+	# Based on paralellel trigger and serial count
+	subpath="$( date +%Y-%m-%d-%H-%M )-parallel-$1-serial-$count/"
+
 	# Create a plot synchronously
 	echo "[ $( date ) ] [ everplot.zsh ] starting plot $count creation" >> $logfile
-	zsh "${0:a:h}/plot.zsh"
+	zsh "${0:a:h}/plot.zsh" $subpath
 
 	echo "[ $( date ) ] [ everplot.zsh ] uploading plot $count to remote asynchronously" >> $logfile
 
@@ -19,7 +23,7 @@ while [ "$goon" = true ]; do
 		echo "[ $( date ) ] [ everplot.zsh ] dry run, skipping upload and waiting 10 seconds" >> $logfile
 		sleep 10
 	else
-		nohup zsh "${0:a:h}/upload.zsh" & disown
+		nohup zsh "${0:a:h}/upload.zsh" $subpath & disown
 	fi
 	
 

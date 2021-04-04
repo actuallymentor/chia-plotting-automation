@@ -2,6 +2,7 @@
 
 # Load environment variables
 source "${0:a:h}/.env"
+subpath=$1
 
 function handleError() {
 	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
@@ -32,20 +33,23 @@ if [ -v dryrun ]; then
 
 	# Create dummy chia files
 	echo "[ $( date ) ] [ plot.zsh ] dry run, making dummy files" >> $logfile
-	echo "A temp file" >> "$tempdir/$( date ).plot.temp"
-	echo "A plot file" >> "$plotdir/$( date ).plot"
+	echo "A temp file" >> "$tempdir/$subpath$( date ).plot.temp"
+	echo "A plot file" >> "$plotdir/$subpath$( date ).plot"
 
 else
 
 	# Create chia plot
-	chia plots create -e -b $memorybuffer -r $threads -k $ksize \
-		-n $amountofplots -d $plotdir -t $tempdir \
+	chia plots create -e \
+		-b $(( $memorybuffer / $parallel )) \
+		-r $(( $threads / $parallel )) \
+		-k $ksize -n $amountofplots \
+		-d $plotdir$subpath -t $tempdir$subpath \
 		-f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey >> $plotlog
 
 fi
 
 echo "[ $(date) ] [ plot.zsh ] Removing $( l $tempdir/*.tmp | wc -l ) tempfiles" >> $logfile
 
-rm -f "$tempdir/*.tmp" || echo "[ $(date) ] [ plot.zsh ] - No temporary files" >> $logfile 
+rm -rf "$tempdir$subpath" || echo "[ $(date) ] [ plot.zsh ] - No temporary files" >> $logfile 
 
 echo "[ $(date) ] [ plot.zsh ] Done creating Chia plot at $plotdir" >> $logfile
