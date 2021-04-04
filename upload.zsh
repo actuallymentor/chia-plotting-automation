@@ -25,7 +25,7 @@ ssh-add $sshkey
 
 echo "[ $( date ) ] [ upload.zsh ] starting upload of $plotfile" >> $logfile
 # Copy without -z compression, -v verbosity, -P progress
-rsync -vP $plotdir/$plotfile "$remoteuser@$remoteserver:$remotedownloadfolder"
+rsync -e "ssh -p $sshport" -vP $plotdir/$plotfile "$remoteuser@$remoteserver:$remotedownloadfolder"
 echo "[ $( date ) ] [ upload.zsh ] completed upload of $plotfile" >> $logfile
 
 # Move the remote file from download folder to farming folder
