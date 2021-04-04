@@ -6,7 +6,7 @@ subpath=$1
 
 function handleError() {
 	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
-	echo "[ $(date) ] [ plot.zsh ] - Plot error $( caller ) at $plotdir" >> $logfile
+	echo "[ $(date) ] [ plot.zsh ] - Plot error $LINENO $( caller ) at $subpath" >> $logfile
 	exit 1
 }
 
@@ -29,6 +29,12 @@ ksize=32
 
 echo "[ $(date) ] [ plot.zsh ] Starting Chia plotting with $threads threads / $memorybuffer MiB RAM" >> $logfile
 
+# Create relevant directory
+echo "[ $(date) ] [ plot.zsh ] creating tempdir $tempdir$subpath" >> $logfile
+mkdir -p $tempdir$subpath
+echo "[ $(date) ] [ plot.zsh ] creating tempdir $plotdir$subpath" >> $logfile
+mkdir -p $plotdir$subpath
+
 if [ -v dryrun ]; then
 
 	# Create dummy chia files
@@ -38,13 +44,14 @@ if [ -v dryrun ]; then
 
 else
 
-	# Create relevant directory
-	echo "[ $(date) ] [ plot.zsh ] creating tempdir $tempdir$subpath" >> $logfile
-	mkdir -p $tempdir$subpath
-	echo "[ $(date) ] [ plot.zsh ] creating tempdir $plotdir$subpath" >> $logfile
-	mkdir -p $plotdir$subpath
-
 	# Create chia plot
+	echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -e \
+		-b $(( $memorybuffer / $parallel )) \
+		-r $(( $threads / $parallel )) \
+		-k $ksize -n $amountofplots \
+		-d $plotdir$subpath -t $tempdir$subpath \
+		-f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey >> $plotlog" >> $logfile
+
 	chia plots create -e \
 		-b $(( $memorybuffer / $parallel )) \
 		-r $(( $threads / $parallel )) \

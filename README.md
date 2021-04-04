@@ -86,4 +86,4 @@ amountofplots=1
 
 ## Dev notes
 
-Reset server storage: `rm -rf chia*; rm -f .env; rm -rf .chia; rm *.log; rm -rf vps; rm nohup.out; l`
+Reset server storage: `rm -rf chia*; rm -f .env; rm -rf .chia; rm *.log; rm -rf vps; rm nohup.out; pgrep -f everplot | xargs kill -9 $1; pgrep -f chia | xargs kill -9 $1; l; ps aux | grep chia`
