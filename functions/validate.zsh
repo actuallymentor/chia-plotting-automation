@@ -27,7 +27,7 @@ if [ -z "$remoteserver" ] || [ -z "$remoteuser" ] || [ -z "$sshkey" ] || [ -z "$
 fi
 
 # Plot config
-if [ -z "$logfile" ] || [ -z "$plotlog" ] || [ -z "$plotdir" ] || [ -z "$tempdir" ] || [ -z "$amountofplots" ] || [ -z "$parallel" ]; then
-	echo "Missing auth settings"
+if [ -z "$overheadInMB" ] || [ -z "$logfile" ] || [ -z "$plotlog" ] || [ -z "$plotdir" ] || [ -z "$tempdir" ] || [ -z "$amountofplots" ] || [ -z "$parallel" ]; then
+	echo "Missing plot config settings"
 	exit 1
 fi
