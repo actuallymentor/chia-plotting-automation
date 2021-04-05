@@ -33,9 +33,12 @@ done
 # DO not error on no globbing match
 setopt +o nomatch
 
+# Get anv vars and validate
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source ./.env
+bash "$DIR/validate.zsh"
+
 apt update
-rm -f $plotdir/*.*
 
 git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps
 bash ./vps/03-zsh.sh

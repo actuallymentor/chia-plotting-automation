@@ -1,11 +1,12 @@
 #!/bin/zsh
 
 # Load environment variables
-source "${0:a:h}/.env"
+source "${0:a:h}/../.env"
+source "${0:a:h}/push.zsh"
 subpath=$1
 
 function handleError() {
-	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+	push "Chia plot failed"
 	echo "[ $(date) ] [ plot.zsh ] - Plot error $LINENO $( caller ) at $subpath" >> $logfile
 	exit 1
 }
@@ -61,7 +62,7 @@ else
 
 fi
 
-echo "[ $(date) ] [ plot.zsh ] Removing $( l $tempdir/*.tmp | wc -l ) tempfiles" >> $logfile
+echo "[ $(date) ] [ plot.zsh ] Removing tempfiles at $tempdir$subpath" >> $logfile
 
 rm -rf "$tempdir$subpath" || echo "[ $(date) ] [ plot.zsh ] - No temporary files" >> $logfile 
 

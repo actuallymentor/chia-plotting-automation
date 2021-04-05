@@ -1,10 +1,11 @@
 #!/bin/zsh
 # Load environment variables
-source "${0:a:h}/.env"
+source "${0:a:h}/../.env"
+source "${0:a:h}/push.zsh"
 subpath=$1
 
 function handleError() {
-	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia plot failed&message=Plotting $1 at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+	push "Chia plot failed"
 	echo "[ $(date) ] [ upload.zsh ] plot error $( caller ) at $plotdir$subpath" >> $logfile
 }
 
@@ -17,7 +18,7 @@ setopt +o nomatch
 
 # Get the plotfile
 plotfile=$( ls $plotdir$subpath | grep -P -m 1 ".plot$" )
-echo "[ $( date ) ] [ upload.zsh ] there are $( ls /mnt/volume* | grep -P ".plot$" | wc -l ), choosing $plotfile" >> $logfile
+echo "[ $( date ) ] [ upload.zsh ] there are $( ls $plotdir$subpath | grep -P ".plot$" | wc -l ) plots, choosing $plotfile" >> $logfile
 
 # Trust the remote server and import ssh key
 chmod 600 $sshkey
@@ -34,9 +35,10 @@ ssh $remoteuser@$remoteserver "mv $remotedownloadfolder/* $remoteplotfolder"
 echo "[ $( date ) ] [ upload.zsh ] completed moving of $plotfile" >> $logfile
 
 # Delete local plotfile
+echo "[ $( date ) ] [ upload.zsh ] deleting $plotdir$subpath" >> $logfile
 rm -rf $plotdir$subpath
 
 # Notify via push noti
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia upload success&message=Plot added at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+push "Chia upload success"
 
 echo "[ $( date ) ] [ upload.zsh ] ended upload process of $plotfile" >> $logfile

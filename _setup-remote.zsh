@@ -1,11 +1,16 @@
 #!/bin/zsh
 # Assumption in script: you want the private key at the remote in ~/chiafarmer
 
+## ###############
+## Meta settings
+## ###############
+
 # Load environment variables
 source "${0:a:h}/.env"
+source "${0:a:h}/functions/push.zsh"
 
 function handleError() {
-	curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Chia setup failed&message=Setup error $( caller ) at $myip&url=&priority=1" https://api.pushover.net/1/messages.json
+	push "Chia setup failed"
 	echo "[ $(date) ] - Plot error $1 at $plotdir" >> $logfile
 }
 
@@ -15,6 +20,11 @@ trap handleError ERR
 
 # DO not error on no globbing match
 setopt +o nomatch
+
+
+## ###############
+## Actual setup
+## ###############
 
 echo "Setting up $1 with ${0:a:h}/.env " 
 ssh-keyscan $1 >> ~/.ssh/known_hosts 
@@ -28,13 +38,13 @@ ssh root@$1 "git clone https://github.com/actuallymentor/chia-plotting-automatio
 
 # Run install
 echo "Starting remote setup" 
-ssh -t root@$1 "/bin/bash ~/chia-plotting-automation/install.sh" 
+ssh -t root@$1 "/bin/bash ~/chia-plotting-automation/functions/install.sh" 
 
 # Init plotter
 for ((instance=1; instance<=parallel; instance++)); do
 	echo "Starting remote plotter $instance" 
-	echo "[ $(date) ] - Starting everplot with nohup zsh \$HOME/chia-plotting-automation/everplot.zsh $instance &> \$HOME/nohup.out &" >> $logfile
-	ssh -n root@$1 "nohup zsh \$HOME/chia-plotting-automation/everplot.zsh $instance &> \$HOME/nohup.out &"
+	echo "[ $(date) ] - Starting everplot with nohup zsh \$HOME/chia-plotting-automation/functions/everplot.zsh $instance &> \$HOME/nohup.out &" >> $logfile
+	ssh -n root@$1 "nohup zsh \$HOME/chia-plotting-automation/functions/everplot.zsh $instance &> \$HOME/nohup.out &"
 done
 
 echo "Setup for root@$1 complete"

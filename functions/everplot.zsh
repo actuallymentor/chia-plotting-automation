@@ -4,10 +4,15 @@
 goon=true
 count=1
 instance=$1 # passed by setup script ar argv[0]
-source "${0:a:h}/.env"
+source "${0:a:h}/../.env"
+source "${0:a:h}/push.zsh"
 
 echo "[ $( date ) ] [ everplot.zsh ] starting everplot" >> $logfile
+source "${0:a:h}/validate.zsh"
 
+## ###############
+## Plotting loop
+## ###############
 while [ "$goon" = true ]; do
 
 	# Based on paralellel trigger and serial count
@@ -35,4 +40,4 @@ while [ "$goon" = true ]; do
 done
 
 echo "[ $( date ) ] [ everplot.zsh ] exit everplot" >> $logfile
-curl -f -X POST -d "token=$pushover_token&user=$pushover_user&title=Everplot STOPPED&message=Everplot at $myip ended&url=&priority=1" https://api.pushover.net/1/messages.json
+push "Everplot stopped"
