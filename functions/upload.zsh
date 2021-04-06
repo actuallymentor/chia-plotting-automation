@@ -32,7 +32,7 @@ rsync -e "ssh -p $sshport" -vP $plotdir$subpath/$plotfile "$remoteuser@$remotese
 echo "[ $( date ) ] [ upload.zsh ] completed upload of $plotfile" >> $logfile
 
 # Move the remote file from download folder to farming folder
-ssh $remoteuser@$remoteserver "mv $remotedownloadfolder/* $remoteplotfolder"
+ssh $remoteuser@$remoteserver -p $sshport "mv $remotedownloadfolder/* $remoteplotfolder"
 echo "[ $( date ) ] [ upload.zsh ] completed moving of $plotfile" >> $logfile
 
 # Delete local plotfile
