@@ -6,7 +6,7 @@ subpath=$1
 
 function handleError() {
 	push "Chia plot failed"
-	echo "[ $(date) ] [ upload.zsh ] plot error $( caller ) at $plotdir$subpath" >> $logfile
+	echo "[ $(date) ] [ upload.zsh ] upload error $LINENO at $plotdir$subpath" >> $logfile
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
@@ -21,8 +21,9 @@ plotfile=$( ls $plotdir$subpath | grep -P -m 1 ".plot$" )
 echo "[ $( date ) ] [ upload.zsh ] there are $( ls $plotdir$subpath | grep -P ".plot$" | wc -l ) plots, choosing $plotfile" >> $logfile
 
 # Trust the remote server and import ssh key
+echo "[ $( date ) ] [ upload.zsh ] scanning for keys on $remoteserver:$sshport" >> $logfile
 chmod 600 $sshkey
-eval `ssh-agent -s` && ssh-keyscan $remoteserver >> ~/.ssh/known_hosts
+eval `ssh-agent -s` && ssh-keyscan -p $sshport $remoteserver >> ~/.ssh/known_hosts
 ssh-add $sshkey
 
 echo "[ $( date ) ] [ upload.zsh ] starting upload of $plotfile" >> $logfile
