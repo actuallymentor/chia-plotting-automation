@@ -12,13 +12,14 @@ for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	
 	echo "Setting up instance number $instance"
 	cd ./digital-ocean
-	ip=$( npm run makeplotter | grep "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" )
+	ip=$( npm run makeplotter | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" )
 	echo "Created droplet at $ip"
 	cd ..
 
 	if [ -z "$ip" ]; then
 		echo "No ip found $ip"
 	else
+		echo "Triggering setup with zsh $(pwd)./_setup-remote.zsh $ip"
 	    zsh ./_setup-remote.zsh $ip
 	fi
 

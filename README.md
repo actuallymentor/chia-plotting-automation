@@ -48,6 +48,17 @@ cat ~/everplot.log
 tail -f nohup.out
 ```
 
+### Droplet creation automation
+
+You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances. Be sure to create `digital-ocean//env` with:
+
+```
+personal_access_token=
+
+# https://docs.digitalocean.com/products/platform/availability-matrix/
+defaultRegion=ams3
+```
+
 ## Monitoring
 
 You can follow the progress with `tail -f ~/chia-plotting-automation/nohup.out`, `tail -f ~/everplot.log` and kill the process by running `kill -9 PID` where PIDs can be found using `ps aux | grep everplot`.

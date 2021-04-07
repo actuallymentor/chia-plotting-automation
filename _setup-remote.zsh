@@ -11,7 +11,7 @@ source "${0:a:h}/functions/push.zsh"
 
 function handleError() {
 	push "Chia setup failed"
-	echo "[ $(date) ] - Plot error $1 at $plotdir" >> $logfile
+	echo "[ $(date) ] - Setup error error $LINENO $1 at $plotdir" >> $logfile
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
