@@ -74,7 +74,7 @@ remoteserver='1.1.1.1'
 remoteuser='username'
 sshkey="$HOME/chiafarmer" # for use on the plotting machine, this is where to put the private key REMOTELY
 offlinesshkey="$HOME/.ssh/chiafarmer" # for use in _setup-remote.zsh, so this is your LOCAL privatekey location
-parallel=2
+sshport=22
 
 # Plotting configuration
 logfile="$HOME/everplot.log"
@@ -82,6 +82,8 @@ plotlog="$HOME/plot.log"
 plotdir=$( df -h | grep -Po "/mnt/volume.*" )/plot
 tempdir=$( df -h | grep -Po "/mnt/volume.*" )/temp
 amountofplots=1
+parallel=1
+overheadInMB=512
 
 ```
 
