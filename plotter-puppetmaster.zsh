@@ -11,9 +11,12 @@ spwaningIntervalInSeconds=$(( 15 * $hourInSeconds / 10 )) # Integers only, so 15
 for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	
 	echo "Setting up instance number $instance"
-	ip=$( cd ./digital-ocean && npm run makeplotter | sed "s/Plotter ip address: //" )
+	cd ./digital-ocean
+	ip=$( npm run makeplotter | grep "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" )
 	echo "Created droplet at $ip"
-    zsh ./_setup-remote.zsh $ip
+	cd ..
+
+    # zsh ./_setup-remote.zsh $ip
     sleep 10
 
 done
