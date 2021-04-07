@@ -25,8 +25,9 @@ for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	    zsh ./_setup-remote.zsh $ip
 	fi
 
-	# Throttle in case there is a problem that causes insta-continue
-    sleep 10
+	# Wait until next
+	echo "Waiting for $spwaningIntervalInSeconds seconds until next deploy"
+    sleep $spwaningIntervalInSeconds
 
 done
 
