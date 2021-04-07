@@ -11,7 +11,6 @@ fi
 # Pushover validation
 if [ -z "$pushover_user" ] || [ -z "$pushover_token" ]; then
 	echo "Missing pushover tokens"
-	exit 1
 fi
 
 # Folder validations
