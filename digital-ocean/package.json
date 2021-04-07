@@ -1,0 +1,17 @@
+{
+  "name": "digital-ocean-droplet-maker",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "makeplotter": "node app.js",
+    "start": "debug=true node app.js"
+  },
+  "author": "Mentor Palokaj <mentor@palokaj.co> (http://github.com/actuallymentor)",
+  "license": "MIT",
+  "dependencies": {
+    "do-wrapper": "^4.4.1",
+    "dotenv": "^8.2.0"
+  }
+}
