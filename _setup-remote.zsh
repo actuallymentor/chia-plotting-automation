@@ -10,14 +10,14 @@ source "${0:a:h}/.env"
 source "${0:a:h}/functions/push.zsh"
 remoteip=$1
 
-function handleError() {
-	push "Chia setup failed"
-	echo "[ $(date) ] - Setup error error $LINENO $1 $remoteip at $plotdir" >> $logfile
-}
+# function handleError() {
+# 	push "Chia setup failed"
+# 	echo "[ $(date) ] - Setup error error $LINENO $1 $remoteip at $plotdir" >> $logfile
+# }
 
-# Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
-set -eE
-trap handleError ERR
+# # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
+# set -eE
+# trap handleError ERR
 
 # Do not error on no globbing match
 setopt +o nomatch
@@ -28,8 +28,17 @@ setopt +o nomatch
 ## ###############
 
 echo "Setting up $remoteip with ${0:a:h}/.env"
-ssh-keyscan $remoteip || "Error scanning $remoteip"
-ssh-keyscan $remoteip >> ~/.ssh/known_hosts
+
+# Wait until ssh wakes up on the other side
+keylines=$( ssh-keyscan -T 60 $remoteip | wc -l )
+while [ "$keylines" -eq 0 ]; do
+	echo "Keyscan empty, waiting"
+	keylines=$( ssh-keyscan $remoteip | wc -l )
+	sleep 10
+done
+
+# Add ssh keys to known hosts
+ssh-keyscan -T 60 $remoteip >> ~/.ssh/known_hosts
 echo "Copying files to remote" 
 
 # Copy files
