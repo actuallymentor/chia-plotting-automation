@@ -50,7 +50,7 @@ tail -f nohup.out
 
 ### Droplet creation automation
 
-You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances. Be sure to create `digital-ocean//env` with:
+You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances. Be sure to create `digital-ocean/.env` with:
 
 ```
 personal_access_token=

@@ -6,7 +6,7 @@ amountOfPlotters=$1
 # Settings
 minuteInSeconds=60
 hourInSeconds=$(( $minuteInSeconds * 60 ))
-spwaningIntervalInSeconds=$(( 15 * $hourInSeconds / 10 )) # Integers only, so 15 / 10 is 1.5
+spawningIntervalInSeconds=$(( 15 * $hourInSeconds / 10 )) # Integers only, so 15 / 10 is 1.5
 
 for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	
@@ -26,8 +26,8 @@ for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	fi
 
 	# Wait until next
-	echo "Waiting for $spwaningIntervalInSeconds seconds until next deploy"
-    sleep $spwaningIntervalInSeconds
+	echo "Waiting for $spawningIntervalInSeconds seconds until next deploy"
+    sleep $spawningIntervalInSeconds
 
 done
 
