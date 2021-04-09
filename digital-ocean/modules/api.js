@@ -47,7 +47,7 @@ exports.getSSHKeyIdByName = async namefilter => {
 // Volume management
 // ///////////////////////////////
 // returns { id, name created_at, description, droplet_ids, region={}, size_gigabytes, filesystem_type, filesystem_label }
-exports.createVolume = ( size=500, namePrefix='everplot-ams', region ) => {
+exports.createVolume = async ( size=500, namePrefix='everplot-ams', region ) => {
 
 	// Choose the best region based on availability
 	let bestRegion = defaultRegion
@@ -87,7 +87,7 @@ exports.createVolume = ( size=500, namePrefix='everplot-ams', region ) => {
 // Droplet management
 // ///////////////////////////////
 // returns { id, name, memory, vcpus, disk, created_at, features=[], size_slug, volume_ids=[], region={} }
-exports.create_2vCPU_4RAM_500Volume_Droplet = ( sshKeyId=702861, volume, namePrefix='everplot-ams', region, size='c-2' ) => {
+exports.create_2vCPU_4RAM_500Volume_Droplet = async ( sshKeyId=702861, volume, namePrefix='everplot-ams', region, size='c-2' ) => {
 
 	// Choose the best region based on availability
 	let bestRegion = defaultRegion
