@@ -2,10 +2,10 @@
 // Settings & variables
 // ///////////////////////////////
 require( 'dotenv' ).config()
-const { personal_access_token, defaultRegion } = process.env
+const { personal_access_token, defaultRegion, fallbackRegion } = process.env
 
 // Library
-const { default: DigitalOcean } = require("do-wrapper")
+const { default: DigitalOcean } = require( 'do-wrapper' )
 const api = new DigitalOcean( personal_access_token )
 
 // Helpers
@@ -22,6 +22,12 @@ exports.getMeta = f => Promise.all( [
 	log( 'Images: ', images )
 	log( 'Regions: ', regions )
 	log( 'Sizes: ', sizes )
+} )
+
+exports.getRegions = f => api.regions.getAll().then( ( { regions } ) => {
+	log( 'Regions: ', regions )
+	log( 'defaultRegion: ', regions.find( ( { slug } ) => slug == defaultRegion ) )
+	log( 'fallbackRegion: ', regions.find( ( { slug } ) => slug == fallbackRegion ) )
 } )
 
 // ///////////////////////////////
@@ -42,10 +48,34 @@ exports.getSSHKeyIdByName = async namefilter => {
 // ///////////////////////////////
 // returns { id, name created_at, description, droplet_ids, region={}, size_gigabytes, filesystem_type, filesystem_label }
 exports.createVolume = ( size=500, namePrefix='everplot-ams', region ) => {
+
+	// Choose the best region based on availability
+	let bestRegion = defaultRegion
+	const { regions } = await api.regions.getAll()
+
+	// If default is available choose it
+	const defaultRegionAvailability = regions.find( ( { slug } ) => slug == defaultRegion )
+	const fallbackRegionAvailability = regions.find( ( { slug } ) => slug == fallbackRegion )
+
+	// Best case, default is available
+	if( defaultRegionAvailability.available && defaultRegionAvailability.features.includes( 'storage' ) ) {
+		bestRegion = defaultRegion
+	}
+	// Second best, fallback is available
+	else if ( fallbackRegionAvailability.available && fallbackRegionAvailability.features.includes( 'storage' ) ) {
+		bestRegion = fallbackRegion
+	}
+	// Both are full, pick the first available
+	else {
+		const { slug } = regions.find( ( { features, available } ) => available && features.includes( 'storage' ) )
+		bestRegion = slug
+	}
+
+	// Make config
 	const config = {
 		size_gigabytes: size,
 		name: `${ namePrefix }-${ new Date().getHours() }-${ Math.round( new Date().getMinutes() / 10 ) * 10 }-${ Date.now() }`,
-		region: defaultRegion || region,
+		region: region || bestRegion || defaultRegion,
 		filesystem_type: "ext4",
 		description: 'created via api'
 	}
@@ -57,12 +87,34 @@ exports.createVolume = ( size=500, namePrefix='everplot-ams', region ) => {
 // Droplet management
 // ///////////////////////////////
 // returns { id, name, memory, vcpus, disk, created_at, features=[], size_slug, volume_ids=[], region={} }
-exports.create_2vCPU_4RAM_500Volume_Droplet = ( sshKeyId=702861, volume, namePrefix='everplot-ams', region ) => {
+exports.create_2vCPU_4RAM_500Volume_Droplet = ( sshKeyId=702861, volume, namePrefix='everplot-ams', region, size='c-2' ) => {
+
+	// Choose the best region based on availability
+	let bestRegion = defaultRegion
+	const { regions } = await api.regions.getAll()
+
+	// If default is available choose it
+	const defaultRegionAvailability = regions.find( ( { slug } ) => slug == defaultRegion )
+	const fallbackRegionAvailability = regions.find( ( { slug } ) => slug == fallbackRegion )
+
+	// Best case, default is available
+	if( defaultRegionAvailability.available && defaultRegionAvailability.sizes.includes( size ) ) {
+		bestRegion = defaultRegion
+	}
+	// Second best, fallback is available
+	else if ( fallbackRegionAvailability.available && fallbackRegionAvailability.sizes.includes( size ) ) {
+		bestRegion = fallbackRegion
+	}
+	// Both are full, pick the first available
+	else {
+		const { slug } = regions.find( ( { sizes, available } ) => available && sizes.includes( size ) )
+		bestRegion = slug
+	}
 
 	const config = {
 		name: `${ namePrefix }-${ new Date().getHours() }-${ Math.round( new Date().getMinutes() / 10 ) * 10 }-${ Date.now() }`,
 		region: defaultRegion || region,
-		size: 'c-2', // 2vcpu, 4gb ram
+		size: size, // 2vcpu, 4gb ram
 		image: 'ubuntu-20-04-x64',
 		ssh_keys: [ sshKeyId ],
 		monitoring: true,

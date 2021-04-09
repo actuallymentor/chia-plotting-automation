@@ -57,6 +57,7 @@ personal_access_token=
 
 # https://docs.digitalocean.com/products/platform/availability-matrix/
 defaultRegion=ams3
+fallbackRegion=lon1
 
 # Name of ssh key in DO interface
 sshKeyNameInDO=mentorkey
