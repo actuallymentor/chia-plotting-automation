@@ -2,11 +2,24 @@
 
 # Arguments
 amountOfPlotters=$1
+intervalInHours=$2
+
+# input validation
+if [ -z "$amountOfPlotters" ]; then
+	echo "No amount of plotters specifiec"
+	exit 1
+fi
+
+if [ -z "$intervalInHours" ]; then
+	echo "No setup interval specified"
+	exit 1
+fi
 
 # Settings
 minuteInSeconds=60
 hourInSeconds=$(( $minuteInSeconds * 60 ))
-spawningIntervalInSeconds=$(( 15 * $hourInSeconds / 10 )) # Integers only, so 15 / 10 is 1.5
+spawningIntervalInSeconds=$(( $intervalInHours * 10 * $hourInSeconds / 10 )) # Integers only, so 15 / 10 is 1.5
+
 
 for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	

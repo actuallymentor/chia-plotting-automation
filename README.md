@@ -62,6 +62,8 @@ defaultRegion=ams3
 sshKeyNameInDO=mentorkey
 ```
 
+Puppetmaster usage: `zsh plotter-puppetmaster.zsh numberofplots hoursofdelaybetweenstartingplots`
+
 ## Monitoring
 
 You can follow the progress with `tail -f ~/chia-plotting-automation/nohup.out`, `tail -f ~/everplot.log` and kill the process by running `kill -9 PID` where PIDs can be found using `ps aux | grep everplot`.
