@@ -39,8 +39,12 @@ for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	fi
 
 	# Wait until next
-	echo "Waiting for $spawningIntervalInSeconds seconds until next deploy"
-    sleep $spawningIntervalInSeconds
+	if [ "$instance" = "$amountOfPlotters" ]; then
+    	echo "Setup loop completed $instance setups"
+    else
+    	echo "Waiting for $spawningIntervalInSeconds seconds until next deploy"
+    	sleep $spawningIntervalInSeconds
+    fi
 
 done
 
