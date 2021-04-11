@@ -6,7 +6,7 @@ source "${0:a:h}/push.zsh"
 subpath=$1
 
 function handleError() {
-	push "Chia plot failed"
+	pusherror "Chia plot failed"
 	echo "[ $(date) ] [ plot.zsh ] - Plot error $LINENO at $subpath" >> $logfile
 	exit 1
 }
