@@ -19,7 +19,7 @@ if [ -n "$downloadFolderOverride" ]; then
 fi
 if [ -n "$plotFolderOverride" ]; then
 	echo "Override plot folder $remotedownloadfolder to $plotFolderOverride"
-	remotedownloadfolder=$plotFolderOverride
+	remoteplotfolder=$plotFolderOverride
 fi
 if [ -n "$ipOverride" ]; then
 	echo "Override ip $remoteserver to $ipOverride"
