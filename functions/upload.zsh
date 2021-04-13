@@ -7,8 +7,9 @@ source "${0:a:h}/push.zsh"
 subpath=$1
 remoteuserOverride=$2
 ipOverride=$3
-plotFolderOverride=$4
-downloadFolderOverride=$5
+sshPortOverride=$4
+plotFolderOverride=$5
+downloadFolderOverride=$6
 
 
 # Change things based on arguments
@@ -27,6 +28,10 @@ fi
 if [ -n "$remoteuserOverride" ]; then
 	echo "Override user $remoteuser to $remoteuserOverride"
 	remoteuser=$remoteuserOverride
+fi
+if [ -n "$sshPortOverride" ]; then
+	echo "Override ssh port $sshport to $sshPortOverride"
+	sshport=$sshPortOverride
 fi
 
 function handleError() {

@@ -110,8 +110,8 @@ Reset server storage: `rm -rf chia*; rm -f .env; rm -rf .chia; rm *.log; rm -rf 
 
 Restart a failed upload
 
-- Asynchronously: `ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote plot folder override (optional)> <remote download folder override (optional)> &> ~/nohup.out &'`
-- Synchronously: `ssh -n root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote plot folder override (optional)> <remote download folder override (optional)>'`
+- Asynchronously: `ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override> &> ~/nohup.out &'`
+- Synchronously: `ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override>'`
 
 Updating remote servers:
 
