@@ -92,6 +92,7 @@ remoteuser='username'
 sshkey="$HOME/chiafarmer" # for use on the plotting machine, this is where to put the private key REMOTELY
 offlinesshkey="$HOME/.ssh/chiafarmer" # for use in _setup-remote.zsh, so this is your LOCAL privatekey location
 sshport=22
+enableBitfield=true # remove variable entirely if not
 
 # Plotting configuration
 logfile="$HOME/everplot.log"
@@ -125,13 +126,13 @@ done
 Updating remote servers:
 
 ```shell
-ips=( 1.1.1.1 8.8.8.8 )
+ips=( 1.1.1.1 2.2.2.2 )
 for ip in $ips; do
 
 	echo "Updating repo on $ip"
 	ssh root@$ip 'cd ~/chia-plotting-automation/ && git pull'
 	echo "Updating chia"
-	ssh root@$ip 'cd ~/chia-blockchain/ && git pull'
+	ssh root@$ip 'cd ~/chia-blockchain/ && git fetch && git checkout latest && git pull && nohup sh install.sh &> ~/nohup.out &'
 
 	# To make env changes
 	# ssh root@$ip 'sed -i "s/search/replace/" ~/chia-plotting-automation/.env'
