@@ -120,6 +120,7 @@ ips=( 1.1.1.1 8.8.8.8 )
 for ip in $ips; do
 	echo "Updating repo on $ip"
 	ssh root@$ip 'cd ~/chia-plotting-automation/ && git pull'
+	# ssh root@$ip 'sed -i "s/search/replace/" ~/chia-plotting-automation/.env'
 done
 ```
 
