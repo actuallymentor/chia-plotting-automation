@@ -6,7 +6,24 @@ Assumptions:
 - your remote is ubuntu (probably works on all debian-based distros)
 - your ssh key for farmer use has no password
 
-## Manual usage
+## Full-auto mode
+
+You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances. Be sure to create `digital-ocean/.env` with:
+
+```
+personal_access_token=
+
+# https://docs.digitalocean.com/products/platform/availability-matrix/
+defaultRegion=ams3
+fallbackRegion=lon1
+
+# Name of ssh key in DO interface
+sshKeyNameInDO=mentorkey
+```
+
+Puppetmaster usage: `zsh plotter-puppetmaster.zsh numberofplots hoursofdelaybetweenstartingplots`
+
+### Manual usage
 
 1. Create 2vCPU/4GB VPS with 500GB volume
     - recommended: choose close data center
@@ -27,7 +44,7 @@ The script will:
 4. Make another
 5. Continue until you manually force it to stop
 
-## Automated setup
+### Automated setup of single remote server
 
 Assumptions: you have a locally populated `.env` of which all file references exist.
 
@@ -47,23 +64,6 @@ nohup zsh ./everplot.zsh & disown
 cat ~/everplot.log
 tail -f nohup.out
 ```
-
-### Droplet creation automation
-
-You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances. Be sure to create `digital-ocean/.env` with:
-
-```
-personal_access_token=
-
-# https://docs.digitalocean.com/products/platform/availability-matrix/
-defaultRegion=ams3
-fallbackRegion=lon1
-
-# Name of ssh key in DO interface
-sshKeyNameInDO=mentorkey
-```
-
-Puppetmaster usage: `zsh plotter-puppetmaster.zsh numberofplots hoursofdelaybetweenstartingplots`
 
 ## Monitoring
 
@@ -107,3 +107,20 @@ overheadInMB=512
 ## Dev notes
 
 Reset server storage: `rm -rf chia*; rm -f .env; rm -rf .chia; rm *.log; rm -rf vps; rm nohup.out; pgrep -f everplot | xargs kill -9 $1; pgrep -f chia | xargs kill -9 $1; l; ps aux | grep chia`
+
+Restart a failed upload
+
+- Asynchronously: `ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote plot folder override (optional)> <remote download folder override (optional)> &> ~/nohup.out &'`
+- Synchronously: `ssh -n root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote plot folder override (optional)> <remote download folder override (optional)>'`
+
+Updating remote servers:
+
+```shell
+ips=( 1.1.1.1 8.8.8.8 )
+for ip in $ips; do
+	echo "Updating repo on $ip"
+	ssh root@$ip 'cd ~/chia-plotting-automation/ && git pull'
+done
+```
+
+Or one server: `ssh root@$ip 'cd ~/chia-plotting-automation/ && git pull'`
