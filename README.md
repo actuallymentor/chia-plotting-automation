@@ -113,14 +113,29 @@ Restart a failed upload
 - Asynchronously: `ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override> &> ~/nohup.out &'`
 - Synchronously: `ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override>'`
 
+Remote restart un bulk:
+
+```shell
+failedips=( 1.1.1.1 2.2.2.2 )
+for ip in $failedips; do
+	ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" &> ~/nohup.out &'
+done
+```
+
 Updating remote servers:
 
 ```shell
 ips=( 1.1.1.1 8.8.8.8 )
 for ip in $ips; do
+
 	echo "Updating repo on $ip"
 	ssh root@$ip 'cd ~/chia-plotting-automation/ && git pull'
+	echo "Updating chia"
+	ssh root@$ip 'cd ~/chia-blockchain/ && git pull'
+
+	# To make env changes
 	# ssh root@$ip 'sed -i "s/search/replace/" ~/chia-plotting-automation/.env'
+
 done
 ```
 
