@@ -9,7 +9,7 @@ const { default: DigitalOcean } = require( 'do-wrapper' )
 const api = new DigitalOcean( personal_access_token )
 
 // Helpers
-const { log } = require( './helpers' )
+const { log, wait } = require( './helpers' )
 
 // ///////////////////////////////
 // Meta data management
@@ -125,4 +125,29 @@ exports.create_2vCPU_4RAM_500Volume_Droplet = async ( sshKeyId=702861, volume, n
 
 }
 
+// ///////////////////////////////
+//  Droplet management
+// ///////////////////////////////
+
 exports.getDropletIpById = id => api.droplets.getById( id )
+exports.getDroplets = filter => api.droplets.getAll( null, null, null, 100 ).then( ( { droplets } ) => {
+	log( 'droplets: ', droplets )
+} )
+exports.get_droplet_ids_by_name = filter => api.droplets.getAll( null, null, null, 100 ).then( ( { droplets } ) => {
+	return droplets.filter( ( { name } ) => name.includes( filter ) )
+} )
+
+exports.delete_droplet_and_volumes_by_ids = ( { id, volume_ids } ) => {
+
+	// guardrails
+	if( !id ) throw 'No id provided to delete_droplet_and_volumes_by_ids'
+	if( !volume_ids ) 'No volume array provided to delete_droplet_and_volumes_by_ids'
+	if( !volume_ids.length ) `No volumes provided for ${ id }, continuing, but you should check this out`
+
+	// Delete them
+	return Promise.all( [
+		api.droplets.deleteById( id ),
+		...volume_ids.map( volId => api.volumes.deleteById( volId ) )
+	] )
+
+}

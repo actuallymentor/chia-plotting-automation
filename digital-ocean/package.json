@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "makeplotter": "node app.js",
+    "deleteallplotters": "debug=true node delete.js",
     "start": "debug=true node app.js",
     "getregions": "debug=true regions=true node meta.js",
+    "getdroplets": "debug=true droplets=true node meta.js",
     "getmeta": "debug=true all=true node meta.js"
   },
   "author": "Mentor Palokaj <mentor@palokaj.co> (http://github.com/actuallymentor)",
