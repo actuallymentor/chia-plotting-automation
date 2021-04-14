@@ -132,11 +132,11 @@ for ip in $ips; do
 	echo "Updating repo on $ip"
 	ssh root@$ip 'cd ~/chia-plotting-automation/ && git pull'
 	echo "Updating chia"
-	ssh root@$ip 'cd ~/chia-blockchain/ && git fetch && git checkout latest && git pull && nohup sh install.sh &> ~/nohup.out &'
+	ssh root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
 
 	# To make env changes
 	# ssh root@$ip 'sed -i "s/search/replace/" ~/chia-plotting-automation/.env'
-
+	# ssh root@$ip 'echo "enableBitfield=true # remote addition" >> ~/chia-plotting-automation/.env'
 done
 ```
 
