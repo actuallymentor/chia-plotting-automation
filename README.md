@@ -7,10 +7,10 @@ This repository aims to make it easy to plot [Chia]( https://www.chia.net/ ) plo
 
 Assumptions:
 
-[ ] you are using `zsh` as your shell on your local machine
-[ ] you are running your remote as root
-[ ] your remote is Ubuntu 20.04 (probably works on all debian-based distros)
-[ ] the ssh key that can access the farmer has no password
+- [ ] you are using `zsh` as your shell on your local machine
+- [ ] you are running your remote as root
+- [ ] your remote is Ubuntu 20.04 (probably works on all debian-based distros)
+- [ ] the ssh key that can access the farmer has no password
 
 ## Quickstart
 
