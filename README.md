@@ -20,7 +20,7 @@ Assumptions:
 
 **Calculating optimal plot amount and delay**
 
-The bottleneck in your plotting process is the speed of the downlink from the plotting datacenter to your farming machine (since the plotting can scale infinitely).  In order to maximize your plotting speed, calculate your plotter sount using:
+The bottleneck in your plotting process is the speed of the downlink from the plotting datacenter to your farming machine (since the plotting can scale infinitely).  In order to maximize your plotting speed, calculate your plotter amount using:
 
 `plotter_amount = plot_time / download_time`
 
@@ -93,9 +93,9 @@ sshKeyNameInDO=mentorkey
 
 ### plotter-puppetmaster.zsh: Full-auto mode
 
-You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances.
+You can use `plotter-puppetmaster.zsh` to create an arbitrary number of plotting instances. The machine that runs this needs to be on for `numberofplots * hoursofdelaybetweenstartingplots` since the script runs synchronously.
 
-Puppetmaster usage: `zsh plotter-puppetmaster.zsh numberofplots hoursofdelaybetweenstartingplots`
+Puppetmaster usage: `zsh plotter-puppetmaster.zsh numberofplots hoursofdelaybetweenstartingplots`.
 
 ### Automated setup of single remote server
 
@@ -143,19 +143,38 @@ The script will:
 4. Make another
 5. Continue until you manually force it to stop
 
+---
+
+## Digital Ocean scripts documentation
+
+Available commands inside the `digital-ocean` folder:
+
+- `npm run makeplotter` makes one plotter and returns it's IP
+- `npm run deleteallplotters` deletes all plotters (filter: any droplet with `everplot` in the name, which is what `makeplotter` uses)
+	- The verbose version is `npm start` which prints progress data but is not useful for scripting since it outputs so much data.
+- To query the API for data and print to terminal, these do no write actions:
+	- `npm run getregions` shows all available datacenter regions
+	- `npm run getdroplets` shows all your droplets
+	- `npm run getmeta` gets available images, sized and regions
+
 
 ---
 
-## Dev notes
+## Maintenance and debugging
 
-Reset server storage: `rm -rf chia*; rm -f .env; rm -rf .chia; rm *.log; rm -rf vps; rm nohup.out; pgrep -f everplot | xargs kill -9 $1; pgrep -f chia | xargs kill -9 $1; l; ps aux | grep chia`
+Restart a failed upload asynchronously
 
-Restart a failed upload
+```shell
+ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override> &> ~/nohup.out &'
+```
 
-- Asynchronously: `ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override> &> ~/nohup.out &'`
-- Synchronously: `ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override>'`
+Restart a failed upload synchronously
 
-Remote restart un bulk:
+```shell
+ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override>'
+```
+
+Restart failed uploads in bulk asynchronously:
 
 ```shell
 failedips=( 1.1.1.1 2.2.2.2 )
@@ -179,4 +198,19 @@ for ip in $ips; do
 	# ssh root@$ip 'sed -i "s/search/replace/" ~/chia-plotting-automation/.env'
 	# ssh root@$ip 'echo "enableBitfield=true # remote addition" >> ~/chia-plotting-automation/.env'
 done
+```
+
+Reset remote server manually:
+
+```shell
+rm -rf chia*
+rm -f .env
+rm -rf .chia
+rm *.log
+rm -rf vps
+rm nohup.out
+pgrep -f everplot | xargs kill -9 $1
+pgrep -f chia | xargs kill -9 $1
+l
+ps aux | grep chia # should be empty
 ```
