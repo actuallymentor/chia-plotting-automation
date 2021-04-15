@@ -8,9 +8,26 @@ This repository aims to make it easy to plot [Chia]( https://www.chia.net/ ) plo
 Assumptions:
 
 - [ ] you are using `zsh` as your shell on your local machine
-- [ ] you are running your remote as root
-- [ ] your remote is Ubuntu 20.04 (probably works on all debian-based distros)
-- [ ] the ssh key that can access the farmer has no password
+- [ ] you are running your remote as root on Ubuntu 20.04 (probably works on all debian-based distros)
+- [ ] the ssh key that can access the farmer machine has no password
+- [ ] you have a [pushover]( https://pushover.net/ ) account for push notifications
+
+Notes:
+
+- Datacenter plotting _is more expensive_ than local plotting, but it is convenient
+- Your ISP might throttle you if you use your connection at 100% capacity all the time
+- Downloading terrabytes per day might trigger your ISPs fair-use policy, plan accordingly
+
+This repository is _NOT_ for you if:
+
+- Any of the following things mean nothing to you: VPS, `ssh`, `zsh`, API
+- You are not on a `UN*X` maching (sorry windows)
+- You do now know how to make your farmer machine accessible through `ssh` (port forwarding etc)
+- Your internet connection is slow (sub 100 Mbit/s is probably not worth it)
+
+If you have questions or suggestions, please open a new issue in this repo.
+
+---
 
 ## 🏎 Quickstart
 
