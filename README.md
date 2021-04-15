@@ -1,4 +1,4 @@
-# Chia remote autoplotting
+# 🚜 Chia remote autoplotting
 
 This repository aims to make it easy to plot [Chia]( https://www.chia.net/ ) plots in the [Digital Ocean]( https://www.digitalocean.com/ ) cloud. There are 2 elements to this repository:
 
@@ -12,7 +12,7 @@ Assumptions:
 - [ ] your remote is Ubuntu 20.04 (probably works on all debian-based distros)
 - [ ] the ssh key that can access the farmer has no password
 
-## Quickstart
+## 🏎 Quickstart
 
 1. Install dependencies with `cd digital-ocean && npm i` (requires `node.js`)
 2. Input your settings into `.env` and `digital-ocean/.env`
@@ -34,7 +34,7 @@ Based on the above example of a 400 Mbit/s downlink, we can set up: `plotter_amo
 
 I recommend _rounding down_ your calculations since any internet connection will never be at 100% speed the whole time. At 19:00 on a friday your ISP will probably throttle you so your neighbors can watch Netflix.
 
-### The `.env` files
+### ⚙️ The `.env` files (settings)
 
 #### ./.env
 
@@ -89,7 +89,7 @@ sshKeyNameInDO=mentorkey
 
 ---
 
-## Plotter script documentation
+## 🗺 Plotter script documentation
 
 ### plotter-puppetmaster.zsh: Full-auto mode
 
@@ -145,7 +145,7 @@ The script will:
 
 ---
 
-## Digital Ocean scripts documentation
+## 🦈 Digital Ocean scripts documentation
 
 Available commands inside the `digital-ocean` folder:
 
@@ -160,7 +160,7 @@ Available commands inside the `digital-ocean` folder:
 
 ---
 
-## Maintenance and debugging
+## 🛠 Maintenance and debugging
 
 Restart a failed upload asynchronously
 
