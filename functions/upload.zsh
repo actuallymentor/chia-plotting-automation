@@ -35,7 +35,7 @@ if [ -n "$sshPortOverride" ]; then
 fi
 
 function handleError() {
-	pusherror "Chia plot failed"
+	pusherror "Plot upload failed"
 	echo "[ $(date) ] [ upload.zsh ] upload error $LINENO at $plotdir$subpath" >> $logfile
 }
 
