@@ -71,8 +71,8 @@ echo "[ $( date ) ] [ upload.zsh ] deleting $plotdir$subpath" >> $logfile
 rm -rf $plotdir$subpath
 
 # Notify via push noti
-remoteUtil=$( ssh $remoteuser@$remoteserver -p $sshport "df -h $remotedownloadfolder | grep -Po '\d+%' " )
+remoteUtil=$( ssh $remoteuser@$remoteserver -p $sshport "df -h $remotedownloadfolder | grep -Po '\d+(?=%)' " )
 remoteConnections=$( ssh $remoteuser@$remoteserver -p $sshport "ss -tn src :$sshport | wc -l" )
-push "Chia upload success" "plot drive util $remoteUtil with $remoteConnections connections on :$sshport" "https://cloud.digitalocean.com/"
+push "Chia upload success" "plot drive util $remoteUtil percent with $remoteConnections connections on port $sshport" "https://cloud.digitalocean.com/"
 
 echo "[ $( date ) ] [ upload.zsh ] ended upload process of $plotfile" >> $logfile

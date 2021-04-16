@@ -195,9 +195,19 @@ ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/ev
 Restart failed uploads in bulk asynchronously:
 
 ```shell
-failedips=( 1.1.1.1 2.2.2.2 )
+failedips=( 1.1.1.1 )
 for ip in $failedips; do
-	ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" &> ~/nohup.out &'
+    ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" &> ~/nohup.out &'
+done
+```
+
+Check for plots remotely in bulk:
+
+```shell
+ips=( 1.1.1.1 2.2.2.2 )
+for ip in $ips; do
+    echo -e "\n\nPlots on $ip:"
+    ssh root@$ip 'ls -lah /mnt/everplot*/**/*.plot'
 done
 ```
 
