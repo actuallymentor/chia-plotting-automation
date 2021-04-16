@@ -7,13 +7,13 @@ subpath=$1
 
 function handleError() {
 	pusherror "Chia plot failed"
-	echo "[ $(date) ] [ plot.zsh ] - Plot error $LINENO at $subpath" >> $logfile
+	echo "[ $(date) ] [ plot.zsh ] - Plot error at $1 for $subpath" >> $logfile
 	exit 1
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
 set -eE
-trap handleError ERR
+trap 'handleError ${LINENO}' ERR
 
 # DO not error on no globbing match
 setopt +o nomatch

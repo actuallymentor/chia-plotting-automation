@@ -36,12 +36,12 @@ fi
 
 function handleError() {
 	pusherror "Plot upload failed"
-	echo "[ $(date) ] [ upload.zsh ] upload error $LINENO at $plotdir$subpath" >> $logfile
+	echo "[ $(date) ] [ upload.zsh ] upload error at $1 for $plotdir$subpath" >> $logfile
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
 set -eE
-trap handleError ERR
+trap 'handleError ${LINENO}' ERR
 
 # DO not error on no globbing match
 setopt +o nomatch
@@ -71,6 +71,8 @@ echo "[ $( date ) ] [ upload.zsh ] deleting $plotdir$subpath" >> $logfile
 rm -rf $plotdir$subpath
 
 # Notify via push noti
-push "Chia upload success"
+remoteUtil=$( ssh $remoteuser@$remoteserver -p $sshport "df -h $remotedownloadfolder | grep -Po '\d+%' " )
+remoteConnections=$( ssh $remoteuser@$remoteserver -p $sshport "ss -tn src :$sshport | wc -l" )
+push "Chia upload success" "plot drive util $remoteUtil with $remoteConnections connections on :$sshport" "https://cloud.digitalocean.com/"
 
 echo "[ $( date ) ] [ upload.zsh ] ended upload process of $plotfile" >> $logfile

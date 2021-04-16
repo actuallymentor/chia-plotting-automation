@@ -4,12 +4,12 @@ source "${0:a:h}/push.zsh"
 
 function handleError() {
 	pusherror "Chia update failed"
-	echo "[ $(date) ] [ update.zsh ] update error $LINENO" >> $logfile
+	echo "[ $(date) ] [ update.zsh ] update error at $1" >> $logfile
 }
 
 # Error handling as per https://stackoverflow.com/questions/35800082/how-to-trap-err-when-using-set-e-in-bash
 set -eE
-trap handleError ERR
+trap 'handleError ${LINENO}' ERR
 
 # DO not error on no globbing match
 setopt +o nomatch
