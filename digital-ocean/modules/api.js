@@ -137,17 +137,26 @@ exports.get_droplet_ids_by_name = filter => api.droplets.getAll( null, null, nul
 	return droplets.filter( ( { name } ) => name.includes( filter ) )
 } )
 
-exports.delete_droplet_and_volumes_by_ids = ( { id, volume_ids } ) => {
+exports.get_volume_ids_by_name = filter => api.volumes.getAll( null, null, null, 100 ).then( ( { volumes } ) => {
+	return volumes.filter( ( { name } ) => name.includes( filter ) )
+} )
+
+exports.delete_droplets_by_ids = ( { id } ) => {
 
 	// guardrails
-	if( !id ) throw 'No id provided to delete_droplet_and_volumes_by_ids'
-	if( !volume_ids ) 'No volume array provided to delete_droplet_and_volumes_by_ids'
-	if( !volume_ids.length ) `No volumes provided for ${ id }, continuing, but you should check this out`
+	if( !id ) throw 'No id provided to delete_droplets_by_ids'
 
 	// Delete them
-	return Promise.all( [
-		api.droplets.deleteById( id ),
-		...volume_ids.map( volId => api.volumes.deleteById( volId ) )
-	] )
+	return api.droplets.deleteById( id )
+
+}
+
+exports.delete_volumes_by_ids = ( { id } ) => {
+
+	// guardrails
+	if( !id ) throw 'No id provided to delete_volumes_by_ids'
+
+	// Delete them
+	return api.volumes.deleteById( id )
 
 }
