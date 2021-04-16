@@ -1,7 +1,7 @@
 const { getSSHKeyIdByName, createVolume, create_2vCPU_4RAM_500Volume_Droplet, getDropletIpById } = require( './modules/api' )
 const { wait, log } = require( './modules/helpers' )
 require( 'dotenv' ).config()
-const { sshKeyNameInDO } = process.env
+const { sshKeyNameInDO, volumeSizeOverride } = process.env
 
 // ///////////////////////////////
 // Create 2vCPU/4GB/500GB PS
@@ -11,7 +11,7 @@ const createPlotter = async f => {
 	try {
 
 		const { id: sshKeyId } = await getSSHKeyIdByName( sshKeyNameInDO || 'mentorkey' )
-		const { id: VolumeId } = await createVolume()
+		const { id: VolumeId } = await createVolume( volumeSizeOverride || 350 )
 		const droplet = await create_2vCPU_4RAM_500Volume_Droplet( sshKeyId, VolumeId )
 		log( 'Created droplet: ', droplet )
 

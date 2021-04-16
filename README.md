@@ -44,7 +44,7 @@ The bottleneck in your plotting process is the speed of the downlink from the pl
 where those variables are defined as:
 
 1. `download_time (hours, decimal)`either based on your [Speedtest]( https://www.speedtest.net/ ) data or real life data. A 400/s Mbit downlink would equal `download_time = 103GB / ( 400 Mbit / 8 ) / ( 3600 seconds in a hour ) = ` **~0.6 hours**
-2. `plot_time (hours, decimal)` is how long a plot takes to create. On the default setting of a `2vCPU 4 GB RAM` machine this is about **13 hours**
+2. `plot_time (hours, decimal)` is how long a plot takes to create. On the default setting of a `2vCPU 4 GB RAM` machine this is about **11-12 hours** (_last updated 16 Apr 2021, chia v1.0.4_)
 3. `plotter_amount (droplets, integer)` is the amount of plotters to run at the same time, so that your downlink is always being fully utulised
 
 Based on the above example of a 400 Mbit/s downlink, we can set up: `plotter_amount = plot_time / download_time = 13 / 0.6 =` **~21 plotters**.
@@ -93,15 +93,16 @@ overheadInMB=512
 
 #### digital-ocean/.env
 
-```
+```shell
+# https://cloud.digitalocean.com/account/api/tokens
 personal_access_token=
 
 # https://docs.digitalocean.com/products/platform/availability-matrix/
 defaultRegion=ams3
 fallbackRegion=lon1
 
-# Name of ssh key in DO interface
-sshKeyNameInDO=mentorkey
+# chia temp/plotting dir size in GB, 350GB default
+volumeSizeOverride=350
 ```
 
 ---
