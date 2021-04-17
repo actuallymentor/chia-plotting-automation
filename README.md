@@ -89,6 +89,9 @@ overheadInMB=512
 
 # enableBitfield=true # remove variable entirely if not
 
+# Local logging (for farming machine)
+daemonLog=~/chia.daemon.log
+
 ```
 
 #### digital-ocean/.env
@@ -138,7 +141,16 @@ tail -f nohup.out
 
 ### Monitoring
 
+#### Plotter status
+
 You can follow the progress with `tail -f ~/chia-plotting-automation/nohup.out`, `tail -f ~/everplot.log` and kill the process by running `kill -9 PID` where PIDs can be found using `ps aux | grep everplot`.
+
+#### functions/start-farmer-if-needed.zsh
+
+This script starts the chia farmer if it is not running. It also logs status details to the file specified at `daemonLog` in `./.env`. You may want to run this script on your farmer cron.
+
+Call this script with: `zsh ~/chia-plotting-automation/functions/start-farmer-if-needed.zsh` (assuming your cloned this repo in `~`).
+
 
 ### Manual usage
 
