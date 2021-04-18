@@ -10,8 +10,10 @@ source ~/chia-blockchain/activate
 if chia farm summary | grep -q 'Connection error'; then
 
 	# Start chia if needed
-	echo "Chia is not running, starting"
+	echo "[ $( date ) ] - ⚠️ Chia offline - restarting"
+	echo "[ $( date ) ] - ⚠️ Chia offline - restarting"
 	pusherror "Chia not running - restarting"
+	
 	chia start farmer
 
 	# Hol'up a minnit
