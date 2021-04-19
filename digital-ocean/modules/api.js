@@ -136,7 +136,7 @@ exports.getDroplets = filter => api.droplets.getAll( null, null, null, 100 ).the
 		return name.includes( 'everplot' )
 	} ).map( ( { networks } ) => {
 		return networks.v4.find( ( { type } ) => type == 'public' )[ 'ip_address' ]
-	} ).join( ', ' ) )
+	} ).join( ' ' ) )
 } )
 exports.get_droplet_ids_by_name = filter => api.droplets.getAll( null, null, null, 100 ).then( ( { droplets } ) => {
 	return droplets.filter( ( { name } ) => name.includes( filter ) )
