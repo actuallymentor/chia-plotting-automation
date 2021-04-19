@@ -4,7 +4,7 @@ source "${0:a:h}/../.env"
 source "${0:a:h}/push.zsh"
 
 # Activate chia cli
-cd ~/chia-blockchain/activate
+cd ~/chia-blockchain/
 git pull
 source ./activate
 
