@@ -24,7 +24,10 @@ setopt +o nomatch
 # Performance settings
 restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - $overheadInMB )) )
 restMiBAfter512MBRemoved=$(( $restMBAfter512MBRemoved * 1000 / 1049 ))
-threads=$( getconf _NPROCESSORS_ONLN )
+# if threads are unconfigured, set threads to amount of cores
+if [ -z "$threads" ]; then
+	threads=$( getconf _NPROCESSORS_ONLN )
+fi
 memorybuffer=$( echo $restMiBAfter512MBRemoved ) # in MiBs, 4608 is default which is 4832 MB which is 4.84 GB
 ksize=32
 
