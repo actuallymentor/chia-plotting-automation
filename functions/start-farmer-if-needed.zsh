@@ -4,9 +4,9 @@ source "${0:a:h}/../.env"
 source "${0:a:h}/push.zsh"
 
 # Activate chia cli
-cd ~/chia-blockchain/
+source ~/chia-blockchain/activate
+cd ~/chia-plotting-automation
 git pull
-source ./activate
 
 # Check if farm active
 if chia farm summary | grep -q 'Connection error'; then
