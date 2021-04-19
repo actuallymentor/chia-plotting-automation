@@ -26,6 +26,7 @@ restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE
 restMiBAfter512MBRemoved=$(( $restMBAfter512MBRemoved * 1000 / 1049 ))
 # if threads are unconfigured, set threads to amount of cores
 if [ -z "$threads" ]; then
+	echo "[ $( date ) ] [ plot.zsh ] No threads setting, defaulting to physical CPU number" >> $logfile
 	threads=$( getconf _NPROCESSORS_ONLN )
 fi
 memorybuffer=$( echo $restMiBAfter512MBRemoved ) # in MiBs, 4608 is default which is 4832 MB which is 4.84 GB
