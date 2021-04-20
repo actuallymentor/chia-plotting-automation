@@ -15,12 +15,23 @@ source "${0:a:h}/validate.zsh"
 ## ###############
 while [ "$goon" = true ]; do
 
+	# Start time
+	start=$( date +%s )
+
 	# Based on paralellel trigger and serial count
 	subpath="/$( date +%Y-%m-%d-%H-%M )-parallel-$instance-serial-$count/"
 
 	# Create a plot synchronously
 	echo "[ $( date ) ] [ everplot.zsh ] starting plot $count creation" >> $logfile
+	echo "[ $( date ) ] [ everplot.zsh ] volume usage at start: $( df -h /mnt/ever* | grep /dev )" >> $logfile
 	zsh "${0:a:h}/plot.zsh" $subpath
+	echo "[ $( date ) ] [ everplot.zsh ] volume usage at completion: $( df -h /mnt/ever* | grep /dev )" >> $logfile
+
+	# End time timestamp
+	end=$( date +%s )
+	plotDurationInSeconds=$(( end - start ))
+	plotDurationInHM=$( date -d@$plotDurationInSeconds -u +%H:%M )
+	echo "[ $( date ) ] [ everplot.zsh ] plotting took $plotDurationInHM" >> $logfile
 
 	echo "[ $( date ) ] [ everplot.zsh ] uploading plot $count to remote asynchronously" >> $logfile
 
@@ -28,7 +39,7 @@ while [ "$goon" = true ]; do
 		echo "[ $( date ) ] [ everplot.zsh ] dry run, skipping upload and waiting 10 seconds" >> $logfile
 		sleep 10
 	else
-		nohup zsh "${0:a:h}/upload.zsh" $subpath & disown
+		nohup zsh "${0:a:h}/upload.zsh" $subpath $plotDurationInHM & disown
 	fi
 	
 

@@ -195,13 +195,13 @@ Available commands inside the `digital-ocean` folder:
 Restart a failed upload asynchronously
 
 ```shell
-ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override> &> ~/nohup.out &'
+ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" 'override' <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override> &> ~/nohup.out &'
 ```
 
 Restart a failed upload synchronously
 
 ```shell
-ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override>'
+ssh root@$ip 'zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" 'override' <remote user override> <remote ip override> <remote ssh port override> <remote plot folder override> <remote download folder override>'
 ```
 
 Restart failed uploads in bulk asynchronously:

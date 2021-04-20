@@ -5,11 +5,12 @@ source "${0:a:h}/push.zsh"
 
 # Arguments to this script
 subpath=$1
-remoteuserOverride=$2
-ipOverride=$3
-sshPortOverride=$4
-plotFolderOverride=$5
-downloadFolderOverride=$6
+plotDurationInHM=$2
+remoteuserOverride=$3
+ipOverride=$4
+sshPortOverride=$5
+plotFolderOverride=$6
+downloadFolderOverride=$7
 
 
 # Change things based on arguments
@@ -46,6 +47,9 @@ trap 'handleError ${LINENO}' ERR
 # DO not error on no globbing match
 setopt +o nomatch
 
+# Start time
+start=$( date +%s )
+
 # Get the plotfile
 plotfile=$( ls $plotdir$subpath | grep -P -m 1 ".plot$" )
 echo "[ $( date ) ] [ upload.zsh ] there are $( ls $plotdir$subpath | grep -P ".plot$" | wc -l ) plots, choosing $plotfile" >> $logfile
@@ -70,9 +74,16 @@ echo "[ $( date ) ] [ upload.zsh ] completed moving of $plotfile to $remotedownl
 echo "[ $( date ) ] [ upload.zsh ] deleting $plotdir$subpath" >> $logfile
 rm -rf $plotdir$subpath
 
+# End time timestamp
+end=$( date +%s )
+uploadDurationInSeconds=$(( end - start ))
+uploadDurationInHM=$( date -d@$plotDurationInSeconds -u +%H:%M )
+echo "[ $( date ) ] [ upload.zsh ] upload took $uploadDurationInHM" >> $logfile
+echo "[ $( date ) ] [ upload.zsh ] volume usage after upload: $( df -h /mnt/ever* | grep /dev )" >> $logfile
+
 # Notify via push noti
 remoteUtil=$( ssh $remoteuser@$remoteserver -p $sshport "df -h $remotedownloadfolder | grep -Po '\d+(?=%)' " )
 remoteConnections=$( ssh $remoteuser@$remoteserver -p $sshport "ss -Htn src :$sshport not dst $( curl -s icanhazip.com ) | wc -l" )
-push "Chia upload success" "plot drive util $remoteUtil percent with $remoteConnections connections on port $sshport" "https://cloud.digitalocean.com/"
+push "Chia upload success" "plot took $plotDurationInHM, upload took $uploadDurationInHM, plot drive util $remoteUtil percent, $remoteConnections connections on port $sshport" "https://cloud.digitalocean.com/"
 
 echo "[ $( date ) ] [ upload.zsh ] ended upload process of $plotfile" >> $logfile
