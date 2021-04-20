@@ -23,9 +23,9 @@ while [ "$goon" = true ]; do
 
 	# Create a plot synchronously
 	echo "[ $( date ) ] [ everplot.zsh ] starting plot $count creation" >> $logfile
-	echo "[ $( date ) ] [ everplot.zsh ] volume usage at start: $( df -h /mnt/ever* | grep /dev )" >> $logfile
+	echo "[ $( date ) ] [ everplot.zsh ] volume usage at start: $( df -h $plotdir | grep /dev )" >> $logfile
 	zsh "${0:a:h}/plot.zsh" $subpath
-	echo "[ $( date ) ] [ everplot.zsh ] volume usage at completion: $( df -h /mnt/ever* | grep /dev )" >> $logfile
+	echo "[ $( date ) ] [ everplot.zsh ] volume usage at completion: $( df -h $plotdir | grep /dev )" >> $logfile
 
 	# End time timestamp
 	end=$( date +%s )

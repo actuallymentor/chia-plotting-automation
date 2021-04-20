@@ -79,7 +79,7 @@ end=$( date +%s )
 uploadDurationInSeconds=$(( end - start ))
 uploadDurationInHM=$( date -d@$plotDurationInSeconds -u +%H:%M )
 echo "[ $( date ) ] [ upload.zsh ] upload took $uploadDurationInHM" >> $logfile
-echo "[ $( date ) ] [ upload.zsh ] volume usage after upload: $( df -h /mnt/ever* | grep /dev )" >> $logfile
+echo "[ $( date ) ] [ upload.zsh ] volume usage after upload: $( df -h $plotdir | grep /dev )" >> $logfile
 
 # Notify via push noti
 remoteUtil=$( ssh $remoteuser@$remoteserver -p $sshport "df -h $remotedownloadfolder | grep -Po '\d+(?=%)' " )
