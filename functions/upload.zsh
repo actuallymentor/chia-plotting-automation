@@ -77,7 +77,7 @@ rm -rf $plotdir$subpath
 # End time timestamp
 end=$( date +%s )
 uploadDurationInSeconds=$(( end - start ))
-uploadDurationInHM=$( date -d@$plotDurationInSeconds -u +%H:%M )
+uploadDurationInHM=$( date -d@$uploadDurationInSeconds -u +%H:%M )
 echo "[ $( date ) ] [ upload.zsh ] upload took $uploadDurationInHM" >> $logfile
 echo "[ $( date ) ] [ upload.zsh ] volume usage after upload: $( df -h $plotdir | grep /dev )" >> $logfile
 
