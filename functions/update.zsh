@@ -18,7 +18,7 @@ setopt +o nomatch
 echo "[ $( date ) ] [ update.zsh ] Updating chia version" >> $logfile
 
 cd ~/chia-blockchain/
-
+source ./activate
 chia stop -d all
 deactivate
 
