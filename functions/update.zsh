@@ -18,9 +18,14 @@ setopt +o nomatch
 echo "[ $( date ) ] [ update.zsh ] Updating chia version" >> $logfile
 
 cd ~/chia-blockchain/
+
+chia stop -d all
+deactivate
+
 git fetch
 git checkout latest
-git pull
+git reset --hard FETCH_HEAD
+
 sh install.sh
 source activate
 chia init
