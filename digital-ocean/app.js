@@ -11,7 +11,7 @@ const createPlotter = async f => {
 	try {
 
 		const { id: sshKeyId } = await getSSHKeyIdByName( sshKeyNameInDO || 'mentorkey' )
-		const { id: VolumeId } = await createVolume( volumeSizeOverride || 350 )
+		const { id: VolumeId } = await createVolume( ( volumeSizeOverride && Number( volumeSizeOverride ) ) || 350 )
 		const droplet = await create_2vCPU_4RAM_500Volume_Droplet( sshKeyId, VolumeId )
 		log( 'Created droplet: ', droplet )
 
