@@ -53,9 +53,10 @@ else
 
 	if [ -v enableBitfield ]; then
 		# Create chia plot
-		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -b $(( $memorybuffer / $parallel )) -r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
+		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -u 128 -b $(( $memorybuffer / $parallel )) -r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
 		echo "[ $(date) ] [ plot.zsh ] ... -d $plotdir$subpath -t $tempdir$subpath" >> $logfile
 		chia plots create \
+		-u 128 \
 		-b $(( $memorybuffer / $parallel )) \
 		-r $(( $threads / $parallel )) \
 		-k $ksize -n $amountofplots \
@@ -63,9 +64,10 @@ else
 		-f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey >> $plotlog
 	else
 		# Create chia plot
-		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -e -b $(( $memorybuffer / $parallel ))-r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
+		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -e -u 128 -b $(( $memorybuffer / $parallel ))-r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
 		echo "[ $(date) ] [ plot.zsh ] ... -d $plotdir$subpath -t $tempdir$subpath" >> $logfile
 		chia plots create -e \
+		-u 128 \
 		-b $(( $memorybuffer / $parallel )) \
 		-r $(( $threads / $parallel )) \
 		-k $ksize -n $amountofplots \
