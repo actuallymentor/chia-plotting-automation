@@ -19,7 +19,7 @@ echo "[ $( date ) ] [ update.zsh ] Updating chia version" >> $logfile
 
 cd ~/chia-blockchain/
 source ./activate
-chia stop -d all
+chia stop -d all || echo "Chia not running, no need to exit"
 deactivate
 
 git fetch
