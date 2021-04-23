@@ -21,6 +21,7 @@ const deleteEverplotDroplets = async f => {
 		}
 
 		await Promise.all( droplets.map( droplet => delete_droplets_by_ids( droplet ) ) )
+		await wait( 5000 )
 		await Promise.all( volumes.map( volume => delete_volumes_by_ids( volume ) ) )
 
 	} catch( e ) {
