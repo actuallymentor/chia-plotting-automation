@@ -61,7 +61,7 @@ else
 		-r $(( $threads / $parallel )) \
 		-k $ksize -n $amountofplots \
 		-d $plotdir$subpath -t $tempdir$subpath \
-		-f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey >> $plotlog
+		-f $publicfarmerkey -p $poolfarmerkey >> $plotlog
 	else
 		# Create chia plot
 		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -e -u 128 -b $(( $memorybuffer / $parallel ))-r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
@@ -72,7 +72,7 @@ else
 		-r $(( $threads / $parallel )) \
 		-k $ksize -n $amountofplots \
 		-d $plotdir$subpath -t $tempdir$subpath \
-		-f $publicfarmerkey -p $publicchiakey -p $poolfarmerkey >> $plotlog
+		-f $publicfarmerkey -p $poolfarmerkey >> $plotlog
 	fi
 	
 

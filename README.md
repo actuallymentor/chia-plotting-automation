@@ -61,7 +61,6 @@ myip=$( curl icanhazip.com )
 
 # Plot creation keys, ALL MANDATORY. See chia keys show
 publicfarmerkey= # see chia keys show
-publicchiakey=
 poolfarmerkey=
 
 # Pushnotifications using pushover.net
