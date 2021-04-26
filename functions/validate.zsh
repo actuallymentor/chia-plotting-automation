@@ -3,7 +3,7 @@
 ## ###############
 
 # Chia key validation
-if [ -z "$publicfarmerkey" ] || [ -z "$publicchiakey" ] || [ -z "$poolfarmerkey" ]; then
+if [ -z "$publicfarmerkey" ] || [ -z "$poolfarmerkey" ]; then
 	echo "Missing chia keys"
 	exit 1
 fi
