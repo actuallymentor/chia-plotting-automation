@@ -102,6 +102,7 @@ personal_access_token=
 # https://docs.digitalocean.com/products/platform/availability-matrix/
 defaultRegion=ams3
 fallbackRegion=lon1
+sshKeyNameInDO=
 
 # chia temp/plotting dir size in GB, 350GB default
 volumeSizeOverride=350
