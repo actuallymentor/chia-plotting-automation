@@ -80,8 +80,8 @@ enableBitfield=true # remove variable entirely if not
 # Plotting configuration
 logfile="$HOME/everplot.log"
 plotlog="$HOME/plot.log"
-plotdir=$( df -h | grep -Po "/mnt/volume.*" )/plot
-tempdir=$( df -h | grep -Po "/mnt/volume.*" )/temp
+plotdir=$( df -h | grep -Po "/mnt/everplot.*" )/plot
+tempdir=$( df -h | grep -Po "/mnt/everplot.*" )/temp
 amountofplots=1
 parallel=1
 overheadInMB=512
