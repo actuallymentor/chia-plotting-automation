@@ -1,5 +1,14 @@
 # 🚜 Chia remote autoplotting
 
+**TOC**
+
+- [Chia Farmer setup]( #chia-installation-notes )
+- [Quickstart]( #-quickstart )
+- [.env documentation]( #%EF%B8%8F-the-env-files-settings )
+- [Plotter script documentation]( #-plotter-script-documentation )
+- [Digital Ocean script documentation]( #-digital-ocean-scripts-documentation )
+- [Maintenance and debugging]( #-maintenance-and-debugging )
+
 This repository aims to make it easy to plot [Chia]( https://www.chia.net/ ) plots in the [Digital Ocean]( https://www.digitalocean.com/ ) cloud. There are 2 elements to this repository:
 
 1. A Digital Ocean API wrapper to create and destroy plotting machines
@@ -269,3 +278,11 @@ pgrep -f chia | xargs kill -9 $1
 l
 ps aux | grep chia # should be empty
 ```
+
+### Common issues
+
+If something is not working, double check that:
+
+- [ ] Your farmer is using a password-less SSH key
+- [ ] Your farmer is reachable from outside it's network (configure port forwarding on your SSH port)
+- [ ] Your farmer firewall allows `8444` en `8447`
