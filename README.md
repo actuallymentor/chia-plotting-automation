@@ -9,7 +9,7 @@ Assumptions:
 
 - [ ] you are using `zsh` as your shell on your local machine
 - [ ] you are running your remote as root on Ubuntu 20.04 (probably works on all debian-based distros)
-- [ ] the ssh key that can access the farmer machine has no password
+- [ ] the ssh key that can access the farmer machine has **no password**
 - [ ] you have a [pushover]( https://pushover.net/ ) account for push notifications
 
 Notes:
@@ -26,6 +26,21 @@ This repository is _NOT_ for you if:
 - Your internet connection is slow (sub 100 Mbit/s is probably not worth it)
 
 If you have questions or suggestions, please open a new issue in this repo.
+
+## Chia installation notes
+
+1. So set up your farmer device, consider my [VPS setup script]( https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty ).
+2. To install Chia, see [their installation manual](https://github.com/Chia-Network/chia-blockchain/wiki/INSTALL).
+3. To ensure uptime, consider adding `15 * * * * zsh ~/chia-plotting-automation/functions/start-farmer-if-needed.zsh` to your crontab
+4. Consider setting [Uptime Robot]( https://uptimerobot.com/ ) for your farmer SSH port.
+5. Make sure your firewall is permissive to Chia, especially if using my VPS setup script which is quite strict by default. See below.
+
+Your farmer needs to have port `8444` and port `8447` open in order to sync. If you are using UFW on Ubuntu you can use:
+
+```shell
+sudo ufw allow in 8444 comment 'Chia sync port'
+sudo ufw allow in 8447 comment 'Chia second sync port'
+```
 
 ---
 
