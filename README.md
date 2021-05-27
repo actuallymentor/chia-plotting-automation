@@ -1,6 +1,6 @@
 # 🚜 Chia remote autoplotting
 
-**TOC**
+## Table of contents
 
 - [Chia Farmer setup]( #chia-installation-notes )
 - [Quickstart]( #-quickstart )
@@ -8,6 +8,8 @@
 - [Plotter script documentation]( #-plotter-script-documentation )
 - [Digital Ocean script documentation]( #-digital-ocean-scripts-documentation )
 - [Maintenance and debugging]( #-maintenance-and-debugging )
+
+---
 
 This repository aims to make it easy to plot [Chia]( https://www.chia.net/ ) plots in the [Digital Ocean]( https://www.digitalocean.com/ ) cloud. There are 2 elements to this repository:
 
