@@ -6,6 +6,7 @@ When buying new drives and hooking them up, I like to reformat them like so (whe
 # Edit these two
 MOUNTPATH=/mnt/FOLDER/
 DEVID=sdaX # see sudo blkid
+LABEL="Name Of Drive"
 
 # Get the drive location and use it to format the partitions
 sudo blkid
@@ -16,6 +17,7 @@ sudo mkfs -L "Label" -t ext4 "/dev/"$DEVID"1"
 sudo mkdir -p $MOUNTPATH"chia/download/"
 sudo mkdir -p $MOUNTPATH"chia/plots/"
 sudo chown -R $( whoami ) $MOUNTPATH
+chia plots add -d $MOUNTPATH"chia/plots/"
 
 # Get the UUID to use in the fstab
 sudo blkid
