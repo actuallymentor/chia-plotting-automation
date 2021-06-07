@@ -218,6 +218,16 @@ Available commands inside the `digital-ocean` folder:
 
 ## 🛠 Maintenance and debugging
 
+When your farmer drive is full, you'll want to updatethe upload paths on your plotters. To do this you can use:
+
+```shell
+zsh _update-and-restart-all-uploads.zsh oldpath newpath
+```
+
+Where `oldpath` is a string searched for in your `.env`s and replaced with `newpath`. This will update all .env files on your plotters (not your farmer) and trigger uploads in case old ones failed.
+
+### Common scripts
+
 Restart a failed upload asynchronously
 
 ```shell
