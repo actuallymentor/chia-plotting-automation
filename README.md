@@ -281,6 +281,11 @@ l
 ps aux | grep chia # should be empty
 ```
 
+Move plot from one drive to another:
+```shell
+nohup rsync --remove-source-files /mnt/source/chia/plots/plotname.plot /mnt/destination/chia/plots/ & disown
+```
+
 ### Common issues
 
 If something is not working, double check that:
