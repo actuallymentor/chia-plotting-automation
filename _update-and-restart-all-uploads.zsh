@@ -20,6 +20,14 @@ if [[ -n "$oldUploadPath" && -n "$newUploadPath" ]]; then
 
 fi
 
+# Trigger updates remotely
+echo -e "\nUpdating all plotters..."
+
+echo $ips | while read -r ip; do 
+echo "Updating $ip"
+	ssh root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
+done
+
 # Trigger upload if needed on them
 echo -e "\nRestarting uploads on all plotters..."
 

@@ -52,7 +52,13 @@ start=$( date +%s )
 
 # Get the plotfile
 plotfile=$( ls $plotdir$subpath | grep -P -m 1 ".plot$" )
+if [ -z "$plotfile" ]; then
+	echo "[ $( date ) ] [ upload.zsh ] no plotfile in $plotdir$subpath , exiting" >> $logfile
+	exit 0
+fi
+
 echo "[ $( date ) ] [ upload.zsh ] there are $( ls $plotdir$subpath | grep -P ".plot$" | wc -l ) plots, choosing $plotfile" >> $logfile
+
 
 # Trust the remote server and import ssh key
 echo "[ $( date ) ] [ upload.zsh ] scanning for keys on $remoteuser@$remoteserver:$sshport" >> $logfile
