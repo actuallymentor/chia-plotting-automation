@@ -19,6 +19,7 @@ trap 'handleError ${LINENO}' ERR
 setopt +o nomatch
 
 # Activate chia
+echo "[ $(date) ] [ plot.zsh ] Activate chia at $HOME/chia-blockchain/activate" >> $logfile
 . $HOME/chia-blockchain/activate 
 
 # Performance settings
