@@ -23,26 +23,28 @@ spawningIntervalInSeconds=$(( $intervalInHours * 10 * $hourInSeconds / 10 )) # I
 
 for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	
-	echo "Setting up instance number $instance"
+	echo "[ $( date ) ] Setting up instance number $instance"
 	cd ./digital-ocean
 	pwd
 	ip=$( npm run makeplotter | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" )
-	echo "Created droplet at $ip"
+	echo "[ $( date ) ] Created droplet at $ip"
 	cd ..
 	pwd
 
 	if [ -z "$ip" ]; then
-		echo "No ip found $ip"
+		echo "[ $( date ) ] No ip found $ip"
 	else
-		echo "Triggering setup with zsh ./_setup-remote.zsh $ip"
+		echo "[ $( date ) ] Triggering setup with zsh ./_setup-remote.zsh $ip"
 	    zsh ./_setup-remote.zsh $ip
+	    echo "[ $( date ) ] Setup of $ip complete"
 	fi
 
 	# Wait until next
 	if [ "$instance" = "$amountOfPlotters" ]; then
-    	echo "Setup loop completed $instance setups"
+    	echo "[ $( date ) ] Setup loop completed $instance setups"
     else
-    	echo "Waiting for $spawningIntervalInSeconds seconds until next deploy"
+    	echo "[ $( date ) ] Created plotter $instance of $amountofplots"
+    	echo "[ $( date ) ] Waiting for $spawningIntervalInSeconds seconds until next deploy"
     	sleep $spawningIntervalInSeconds
     fi
 
