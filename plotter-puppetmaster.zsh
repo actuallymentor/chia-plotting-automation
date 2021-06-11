@@ -43,7 +43,7 @@ for ((instance=1; instance<=amountOfPlotters; instance++)); do
 	if [ "$instance" = "$amountOfPlotters" ]; then
     	echo "[ $( date ) ] Setup loop completed $instance setups"
     else
-    	echo "[ $( date ) ] Created plotter $instance of $amountofplots"
+    	echo "[ $( date ) ] Created plotter $instance of $amountOfPlotters"
     	echo "[ $( date ) ] Waiting for $spawningIntervalInSeconds seconds until next deploy"
     	sleep $spawningIntervalInSeconds
     fi
