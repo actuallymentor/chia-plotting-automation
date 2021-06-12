@@ -51,7 +51,7 @@ setopt +o nomatch
 start=$( date +%s )
 
 # Get the plotfile
-plotfile=$( ls $plotdir$subpath | grep -P -m 1 ".plot$" )
+plotfile=$( ls $plotdir$subpath | grep -P -m 1 ".plot$" || : )
 if [ -z "$plotfile" ]; then
 	echo "[ $( date ) ] [ upload.zsh ] no plotfile in $plotdir$subpath , exiting" >> $logfile
 	exit 0
