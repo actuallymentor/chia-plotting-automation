@@ -3,6 +3,7 @@
 # Arguments
 oldUploadPath=$1
 newUploadPath=$2
+updateChia=$3
 
 # Get all ips
 cd digital-ocean
