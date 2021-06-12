@@ -17,7 +17,7 @@ if [[ -n "$oldUploadPath" && -n "$newUploadPath" ]]; then
 	echo -e "\nUpdating $oldUploadPath to $newUploadPath on all plotters..."
 	echo $ips | while read -r ip; do
 		echo "Updating $ip"
-		ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/upload.zsh "/$(ls /mnt/everplot*/plot | grep -P -m 1 serial)/" &> ~/nohup.out &'
+		ssh -n root@$ip 'sed -i "s/'$oldUploadPath'/'$newUploadPath'/" ~/chia-plotting-automation/.env'
 	done
 
 fi
@@ -29,7 +29,7 @@ echo $ips | while read -r ip; do
 	ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/update.zsh &> ~/nohup.out &'
 done
 
-# # Trigger upload if needed on them
+# Trigger upload if needed on them
 echo -e "\nRestarting uploads on all plotters..."
 
 echo $ips | while read -r ip; do 
