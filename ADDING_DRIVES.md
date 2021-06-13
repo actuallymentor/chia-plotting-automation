@@ -16,6 +16,7 @@ sudo mkfs -L $LABEL -t ext4 "/dev/"$DEVID"1"
 # Make paths and add them
 sudo mkdir -p $MOUNTPATH"chia/download/"
 sudo mkdir -p $MOUNTPATH"chia/plots/"
+l $MOUNTPATH"/chia/"
 sudo chown -R $( whoami ) $MOUNTPATH
 chia plots add -d $MOUNTPATH"chia/plots/"
 
