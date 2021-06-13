@@ -13,13 +13,6 @@ sudo parted /dev/$DEVID mklabel gpt
 sudo parted /dev/$DEVID mkpart primary 0% 100%
 sudo mkfs -L $LABEL -t ext4 "/dev/"$DEVID"1"
 
-# Make paths and add them
-sudo mkdir -p $MOUNTPATH"chia/download/"
-sudo mkdir -p $MOUNTPATH"chia/plots/"
-l $MOUNTPATH"/chia/"
-sudo chown -R $( whoami ) $MOUNTPATH
-chia plots add -d $MOUNTPATH"chia/plots/"
-
 # Add the drive to Fstab
 PARTITIONUUID=uuid-of-partition-see-blkid
 echo "UUID=$PARTITIONUUID $MOUNTPATH ext4 defaults,nofail,x-systemd.mount-timeout=10s 0 2" | sudo tee -a /etc/fstab
@@ -27,5 +20,12 @@ echo "UUID=$PARTITIONUUID $MOUNTPATH ext4 defaults,nofail,x-systemd.mount-timeou
 # Mount and check status
 sudo mount -a
 df -h
+
+# Make paths and add them
+sudo mkdir -p $MOUNTPATH"chia/download/"
+sudo mkdir -p $MOUNTPATH"chia/plots/"
+l $MOUNTPATH"/chia/"
+sudo chown -R $( whoami ) $MOUNTPATH
+chia plots add -d $MOUNTPATH"chia/plots/"
 
 ```
