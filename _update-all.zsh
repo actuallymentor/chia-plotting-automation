@@ -19,6 +19,7 @@ if [[ -n "$oldUploadPath" && -n "$newUploadPath" ]]; then
 	echo $ips | while read -r ip; do
 		echo "Updating $ip"
 		ssh -n root@$ip 'sed -i "s/'$oldUploadPath'/'$newUploadPath'/" ~/chia-plotting-automation/.env'
+		echo "✅ Search/replace on $ip complete"
 	done
 
 fi
@@ -28,6 +29,7 @@ if [[ -n "$updateChia" ]];then
 	echo -e "\nUpdating all plotters..."
 	echo $ips | while read -r ip; do 
 		echo "Updating $ip"
-		ssh -n root@$ip 'nohup zsh ~/chia-plotting-automation/functions/update.zsh &> ~/nohup.out &'
+		ssh -n root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
+		echo -e "✅ Update of $ip complete\n"
 	done
 fi

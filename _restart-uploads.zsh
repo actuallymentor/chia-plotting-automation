@@ -16,8 +16,15 @@ if [[ -n "$listonly" ]];then
 	echo -e "\nList remote plots..."
 
 	echo $ips | while read -r ip; do 
-		echo -e "\nPlots on $ip"
-		ssh -n root@$ip 'l /mnt/everplot*/**/*.plot'
+		plots=$( ssh -n root@$ip 'setopt +o nomatch && l /mnt/everplot*/**/*.plot 2> /dev/null' )
+		if [[ -n "$plots" ]]; then
+			echo -e "Plots on $ip"
+			echo $plots
+			echo -e "\n"
+		else
+			echo -e "Plots on $ip: none"
+		fi
+		
 	done
 
 	# exit
