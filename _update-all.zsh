@@ -29,7 +29,7 @@ if [[ -n "$updateChia" ]];then
 	echo -e "\nUpdating all plotters..."
 	echo $ips | while read -r ip; do 
 		echo "Updating $ip"
-		ssh -n root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
+		ssh root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
 		echo -e "✅ Update of $ip complete\n"
 	done
 fi
