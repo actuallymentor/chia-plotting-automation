@@ -3,7 +3,6 @@
 # Arguments
 oldUploadPath=$1
 newUploadPath=$2
-updateChia=$3
 
 # Get all ips
 cd digital-ocean
@@ -25,11 +24,11 @@ if [[ -n "$oldUploadPath" && -n "$newUploadPath" ]]; then
 fi
 
 # Trigger updates remotely
-if [[ -n "$updateChia" ]];then
+if [[ "$oldUploadPath" = 'update' ]];then
 	echo -e "\nUpdating all plotters..."
 	echo $ips | while read -r ip; do 
 		echo "Updating $ip"
-		ssh root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
+		ssh -n root@$ip 'zsh ~/chia-plotting-automation/functions/update.zsh'
 		echo -e "✅ Update of $ip complete\n"
 	done
 fi
