@@ -1,8 +1,7 @@
 #!/bin/zsh
 
 # Arguments
-oldUploadPath=$1
-newUploadPath=$2
+listonly=$1
 
 # Get all ips
 cd digital-ocean
@@ -10,6 +9,21 @@ ips=$( npm run getdroplets | grep -o "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" )
 cd ..
 
 echo "Running with ips: $ips"
+
+# List the plots on remote machines
+if [[ -n "$listonly" ]];then
+
+	echo -e "\nList remote plots..."
+
+	echo $ips | while read -r ip; do 
+		echo -e "\nPlots on $ip"
+		ssh -n root@$ip 'l /mnt/everplot*/**/*.plot'
+	done
+
+	# exit
+	exit 0
+
+fi
 
 # Trigger upload if needed on them
 echo -e "\nRestarting uploads on all plotters..."
