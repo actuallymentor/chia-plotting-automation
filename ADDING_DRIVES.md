@@ -7,6 +7,7 @@ When buying new drives and hooking them up, I like to reformat them like so (whe
 MOUNTPATH=/mnt/passport_5TB_five/
 DEVID=sdi # see sudo blkid
 LABEL="Passport 5TB 5"
+UPLOADUSER=mentor
 
 # Get the drive location and use it to format the partitions
 sudo parted /dev/$DEVID mklabel gpt
@@ -22,7 +23,7 @@ echo "UUID=$PARTITIONUUID $MOUNTPATH ext4 defaults,nofail,x-systemd.mount-timeou
 sudo mkdir -p $MOUNTPATH"chia/download/"
 sudo mkdir -p $MOUNTPATH"chia/plots/"
 l $MOUNTPATH"/chia/"
-sudo chown -R $( whoami ) $MOUNTPATH
+sudo chown -R $UPLOADUSER $MOUNTPATH
 
 # Mount and check status
 sudo mount -a
