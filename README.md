@@ -60,6 +60,7 @@ sudo ufw allow in 8447 comment 'Chia second sync port'
 1. Install dependencies with `cd digital-ocean && npm i` (requires `node.js`)
 2. Input your settings into `.env` and `digital-ocean/.env`
 3. Run `zsh plotter-puppetmaster.zsh plotter_amount download_time`
+4. Update running plotter `.env` files with `zsh _update-all.zsh search_this replace_this`
 
 **Calculating optimal plot amount and delay**
 
