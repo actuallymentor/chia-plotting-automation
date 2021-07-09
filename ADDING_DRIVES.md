@@ -4,9 +4,9 @@ When buying new drives and hooking them up, I like to reformat them like so (whe
 
 ```shell
 # Edit these
-MOUNTPATH=/mnt/passport_5TB_seven/
-DEVID=sdk # see sudo blkid | grep "My Passport"
-LABEL="Passport 5TB 7"
+MOUNTPATH=/mnt/passport_5TB_eleven/
+DEVID=sdo # see sudo blkid | grep "My Passport" lmno
+LABEL="Passport 5TB 11"
 UPLOADUSER=mentor
 
 # Get the drive location and use it to format the partitions
@@ -21,6 +21,7 @@ read
 echo "UUID=$PARTITIONUUID $MOUNTPATH ext4 defaults,nofail,x-systemd.mount-timeout=10s 0 2" | sudo tee -a /etc/fstab
 
 # Mount and check status
+sudo mkdir $MOUNTPATH
 sudo mount -a
 df -h
 
