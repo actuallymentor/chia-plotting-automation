@@ -46,16 +46,41 @@ bash ./vps/04-swap.sh
 
 echo "[ $( date ) ] shell setup complete" >> $logfile
 
-# Install Chia
-cd
-git clone https://github.com/Chia-Network/chia-blockchain.git
-cd chia-blockchain
+# Install chia or madmax
+if [ -v madmax ]; then
 
-sh install.sh
+	# Madmax setup
+	apt install -y libsodium-dev cmake g++ git build-essential
+	# Checkout the source and install
+	git clone https://github.com/madMAx43v3r/chia-plotter.git 
+	cd chia-plotter
+	git submodule update --init
+	./make_devel.sh
+	./build/chia_plot --help
 
-. ./activate
+	# Make ramdisk
+	ramdiskpath="${ramdisk:-/mnt/ramdisk/}"
+	mkdir $ramdiskpath
+	restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - $overheadInMB )) )
+	restMiBAfter512MBRemoved=$(( $restMBAfter512MBRemoved * 1000 / 1049 ))
+	mount -t tmpfs -o size=$restMiBAfter512MBRemoved"M" tmpfs $ramdiskpath
+	echo "[ $( date ) ] Madmax installation complete" >> $logfile
 
-chia init 
-echo "[ $( date ) ] chia installation complete" >> $logfile
+else
+
+	# Install Chia
+	cd
+	git clone https://github.com/Chia-Network/chia-blockchain.git
+	cd chia-blockchain
+
+	sh install.sh
+
+	. ./activate
+
+	chia init 
+	echo "[ $( date ) ] chia installation complete" >> $logfile
+
+
+fi
 
 cd ~/chia-plotting-automation
