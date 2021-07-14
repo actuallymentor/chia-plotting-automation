@@ -46,7 +46,7 @@ while [ "$goon" = true ]; do
 	# Increment plot counter and sleep for a minute
 	((count=count+1))
 	echo "[ $( date ) ] [ everplot.zsh ] sleeping a minute before creating plot $count" >> $logfile
-	sleep 60
+	sleep "${plotTimeoutInSeconds:-60}"
 
 done
 

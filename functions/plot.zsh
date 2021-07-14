@@ -51,29 +51,53 @@ if [ -v dryrun ]; then
 else
 
 	
+	# Madmax plotting
+	if [ -v madmax ]; then
 
-	if [ -v enableBitfield ]; then
-		# Create chia plot
-		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -u 128 -b $(( $memorybuffer / $parallel )) -r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
-		echo "[ $(date) ] [ plot.zsh ] ... -d $plotdir$subpath -t $tempdir$subpath" >> $logfile
-		chia plots create \
-		-u 128 \
-		-b $(( $memorybuffer / $parallel )) \
-		-r $(( $threads / $parallel )) \
-		-k $ksize -n $amountofplots \
-		-d $plotdir$subpath -t $tempdir$subpath \
-		-f $publicfarmerkey -p $poolfarmerkey >> $plotlog
+		# First clear ramdisk
+		ramdiskpath="${ramdiskpath:-/mnt/ramdisk/}"
+		rm -rf $ramdisk"*"
+
+		cd
+		echo "[ $(date) ] Start madmax plot" >> $logfile
+		./chia-plotter/build/chia_plot \
+		-f $publicfarmerkey \
+		-p $poolfarmerkey \
+		-t $tempdir$subpath \
+		-d $plotdir$subpath \
+		-n $amountofplots \
+		-2 $ramdisk \
+		-r $threads >>  $logfile
+		echo "[ $(date) ] End madmax plot" >> $logfile
+
+
+	# Vanilla chia plotting
 	else
-		# Create chia plot
-		echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -e -u 128 -b $(( $memorybuffer / $parallel ))-r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
-		echo "[ $(date) ] [ plot.zsh ] ... -d $plotdir$subpath -t $tempdir$subpath" >> $logfile
-		chia plots create -e \
-		-u 128 \
-		-b $(( $memorybuffer / $parallel )) \
-		-r $(( $threads / $parallel )) \
-		-k $ksize -n $amountofplots \
-		-d $plotdir$subpath -t $tempdir$subpath \
-		-f $publicfarmerkey -p $poolfarmerkey >> $plotlog
+
+		if [ -v enableBitfield ]; then
+			# Create chia plot
+			echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -u 128 -b $(( $memorybuffer / $parallel )) -r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
+			echo "[ $(date) ] [ plot.zsh ] ... -d $plotdir$subpath -t $tempdir$subpath" >> $logfile
+			chia plots create \
+			-u 128 \
+			-b $(( $memorybuffer / $parallel )) \
+			-r $(( $threads / $parallel )) \
+			-k $ksize -n $amountofplots \
+			-d $plotdir$subpath -t $tempdir$subpath \
+			-f $publicfarmerkey -p $poolfarmerkey >> $plotlog
+		else
+			# Create chia plot
+			echo "[ $(date) ] [ plot.zsh ] running with: chia plots create -e -u 128 -b $(( $memorybuffer / $parallel ))-r $(( $threads / $parallel )) -k $ksize -n $amountofplots" >> $logfile
+			echo "[ $(date) ] [ plot.zsh ] ... -d $plotdir$subpath -t $tempdir$subpath" >> $logfile
+			chia plots create -e \
+			-u 128 \
+			-b $(( $memorybuffer / $parallel )) \
+			-r $(( $threads / $parallel )) \
+			-k $ksize -n $amountofplots \
+			-d $plotdir$subpath -t $tempdir$subpath \
+			-f $publicfarmerkey -p $poolfarmerkey >> $plotlog
+		fi
+
 	fi
 	
 

@@ -59,7 +59,7 @@ if [ -v madmax ]; then
 	./build/chia_plot --help
 
 	# Make ramdisk
-	ramdiskpath="${ramdisk:-/mnt/ramdisk/}"
+	ramdiskpath="${ramdiskpath:-/mnt/ramdisk/}"
 	mkdir $ramdiskpath
 	restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - $overheadInMB )) )
 	restMiBAfter512MBRemoved=$(( $restMBAfter512MBRemoved * 1000 / 1049 ))

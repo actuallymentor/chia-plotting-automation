@@ -125,6 +125,44 @@ exports.create_2vCPU_4RAM_500Volume_Droplet = async ( sshKeyId=702861, volume, n
 
 }
 
+// returns { id, name, memory, vcpus, disk, created_at, features=[], size_slug, volume_ids=[], region={} }
+exports.create_16vCPU_128RAM_No_Volume_Droplet = async ( sshKeyId=702861, namePrefix='everplot-ams', region, size='m3-16vcpu-128gb' ) => {
+
+	// Choose the best region based on availability
+	let bestRegion = defaultRegion
+	const { regions } = await api.regions.getAll()
+
+	// If default is available choose it
+	const defaultRegionAvailability = regions.find( ( { slug } ) => slug == defaultRegion )
+	const fallbackRegionAvailability = regions.find( ( { slug } ) => slug == fallbackRegion )
+
+	// Best case, default is available
+	if( defaultRegionAvailability.available && defaultRegionAvailability.sizes.includes( size ) ) {
+		bestRegion = defaultRegion
+	}
+	// Second best, fallback is available
+	else if ( fallbackRegionAvailability.available && fallbackRegionAvailability.sizes.includes( size ) ) {
+		bestRegion = fallbackRegion
+	}
+	// Both are full, pick the first available
+	else {
+		const { slug } = regions.find( ( { sizes, available } ) => available && sizes.includes( size ) )
+		bestRegion = slug
+	}
+
+	const config = {
+		name: `${ namePrefix }-${ new Date().getHours() }-${ Math.round( new Date().getMinutes() / 10 ) * 10 }-${ Date.now() }`,
+		region: defaultRegion || region,
+		size: size, // 2vcpu, 4gb ram
+		image: 'ubuntu-20-04-x64',
+		ssh_keys: [ sshKeyId ],
+		monitoring: true
+	}
+	log( 'Creating droplet with: ', config )
+	return api.droplets.create( config ).then( ( { droplet } ) => droplet )
+
+}
+
 // ///////////////////////////////
 //  Droplet management
 // ///////////////////////////////
