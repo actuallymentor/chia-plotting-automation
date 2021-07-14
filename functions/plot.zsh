@@ -19,8 +19,14 @@ trap 'handleError ${LINENO}' ERR
 setopt +o nomatch
 
 # Activate chia
-echo "[ $(date) ] [ plot.zsh ] Activate chia at $HOME/chia-blockchain/activate" >> $logfile
-. $HOME/chia-blockchain/activate 
+if [ -v madmax ]; then
+
+	echo "[ $(date) ] [ plot.zsh ] using madmax, not activating chia" >> $logfile	
+
+else
+	echo "[ $(date) ] [ plot.zsh ] Activate chia at $HOME/chia-blockchain/activate" >> $logfile
+	. $HOME/chia-blockchain/activate
+fi
 
 # Performance settings
 restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - $overheadInMB )) )

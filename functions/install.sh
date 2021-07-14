@@ -64,6 +64,7 @@ if [ -v madmax ]; then
 	restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - $overheadInMB )) )
 	restMiBAfter512MBRemoved=$(( $restMBAfter512MBRemoved * 1000 / 1049 ))
 	mount -t tmpfs -o size=$restMiBAfter512MBRemoved"M" tmpfs $ramdiskpath
+	df -h
 	echo "[ $( date ) ] Madmax installation complete" >> $logfile
 
 else
