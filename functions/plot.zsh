@@ -74,7 +74,7 @@ else
 		-d $plotdir$subpath \
 		-n $amountofplots \
 		-2 $ramdiskpath \
-		-r $threads &>>  $plotlog
+		-r $threads &>> $plotlog
 		echo "[ $(date) ] End madmax plot" >> $logfile
 
 

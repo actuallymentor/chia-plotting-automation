@@ -42,7 +42,12 @@ apt update
 
 git clone https://github.com/actuallymentor/vps-setup-ssh-zsh-pretty.git vps
 bash ./vps/03-zsh.sh
-bash ./vps/04-swap.sh
+
+if [ -v madmax ]; then
+	echo "[ $( date ) ] Using madmax, skip swap" >> $logfile
+else
+	bash ./vps/04-swap.sh
+fi
 
 echo "[ $( date ) ] shell setup complete" >> $logfile
 
@@ -61,9 +66,7 @@ if [ -v madmax ]; then
 	# Make ramdisk
 	ramdiskpath="${ramdiskpath:-/mnt/ramdisk/}"
 	mkdir $ramdiskpath
-	restMBAfter512MBRemoved=$( echo $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) - $overheadInMB )) )
-	restMiBAfter512MBRemoved=$(( $restMBAfter512MBRemoved * 1000 / 1049 ))
-	mount -t tmpfs -o size=$restMiBAfter512MBRemoved"M" tmpfs $ramdiskpath
+	mount -t tmpfs -o size=110G tmpfs $ramdiskpath
 	df -h
 	echo "[ $( date ) ] Madmax installation complete" >> $logfile
 
