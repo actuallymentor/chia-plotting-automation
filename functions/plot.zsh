@@ -62,7 +62,7 @@ else
 
 		# First clear ramdisk
 		ramdiskpath="${ramdiskpath:-/mnt/ramdisk/}"
-		rm -rf $ramdisk"*"
+		rm -rf $ramdiskpath"*"
 
 		cd
 		echo "[ $(date) ] Start madmax plot" >> $logfile
@@ -72,7 +72,7 @@ else
 		-t $tempdir$subpath \
 		-d $plotdir$subpath \
 		-n $amountofplots \
-		-2 $ramdisk \
+		-2 $ramdiskpath \
 		-r $threads >>  $logfile
 		echo "[ $(date) ] End madmax plot" >> $logfile
 
