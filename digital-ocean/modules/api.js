@@ -126,7 +126,7 @@ exports.create_2vCPU_4RAM_500Volume_Droplet = async ( sshKeyId=702861, volume, n
 }
 
 // returns { id, name, memory, vcpus, disk, created_at, features=[], size_slug, volume_ids=[], region={} }
-exports.create_16vCPU_128RAM_No_Volume_Droplet = async ( sshKeyId=702861, namePrefix='everplot-ams', region, size='m3-16vcpu-128gb' ) => {
+exports.create_16vCPU_128RAM_No_Volume_Droplet = async ( sshKeyId=702861, namePrefix='everplot-ams', region, size='m-16vcpu-128gb' ) => {
 
 	// Choose the best region based on availability
 	let bestRegion = defaultRegion
