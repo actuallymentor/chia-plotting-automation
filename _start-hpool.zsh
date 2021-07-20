@@ -1,21 +1,31 @@
 # Very specific to my serup
 cd ~/hpool/linux-arm
 
+# Variables
 drives=$( ls -1d /mnt/* )
-
+devices=$( ls -1d /dev/sd* )
 hpoolpath='/home/mentor/hpool'
 mounts="--mount type=bind,source=$hpoolpath,target=$hpoolpath"
 paths=""
 
+# Add drives to docker mount command
 echo $drives | while read -r drive; do
         mounts="$mounts --mount type=bind,source=$drive,target=$drive"
         paths="$paths- $drive/chia/plots\n"
 done
 
+# # Set all drives to no timeout
+# echo $devices | while read -r device; do
+#         sudo hdparm -S 0 $device && echo "✅ No sleep for $device" || echo "⚠️ Cannot force nosleep on $device"
+# done
 
-echo "Run docker and inside there run ./$hpoolpath/hpool-chia-miner-linux-arm"
-echo "Run with: "
-echo "sudo docker run -it $mounts arm32v7/ubuntu"
+# Terminal feedback
+echo "Run docker and inside there run $hpoolpath/linux-arm/hpool-chia-miner-linux-arm"
+echo -e "Run with: \n"
+echo "sudo docker run --name hpool --restart unless-stopped -d $mounts arm32v7/ubuntu /bin/bash -c \"cd $hpoolpath/linux-arm/ && ./hpool-chia-miner-linux-arm\" "
+
+echo -e "Or interactively with: \n"
+echo "sudo docker run --name hpool --restart no -it $mounts arm32v7/ubuntu /bin/bash -c \"cd $hpoolpath/linux-arm/ && ./hpool-chia-miner-linux-arm\" "
 
 
 echo -e "token: \"\"
