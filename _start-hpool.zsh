@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Very specific to my serup
 cd ~/hpool/linux-arm
 
