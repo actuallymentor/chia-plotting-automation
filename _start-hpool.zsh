@@ -10,6 +10,7 @@ paths=""
 
 # Add drives to docker mount command
 echo $drives | while read -r drive; do
+        echo "Adding mount for $drive"
         mounts="$mounts --mount type=bind,source=$drive,target=$drive"
         paths="$paths- $drive/chia/plots\n"
 done
