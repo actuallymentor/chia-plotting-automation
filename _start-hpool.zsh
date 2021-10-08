@@ -25,7 +25,7 @@ done
 # Terminal feedback
 echo "Run docker and inside there run $hpoolpath/linux-arm/hpool-chia-miner-linux-arm"
 echo -e "Run with: \n"
-echo "sudo docker run --name hpool --restart unless-stopped -d $mounts arm32v7/ubuntu /bin/bash -c \"cd $hpoolpath/linux-arm/ && ./hpool-chia-miner-linux-arm\" "
+echo "sudo docker run --name hpool --restart unless-stopped -d $mounts arm64v8/ubuntu /bin/bash -c \"cd $hpoolpath/linux-arm/ && ./hpool-chia-miner-linux-arm\" "
 
 echo -e "Or interactively with: \n"
 echo "sudo docker run --name hpool --restart no -it $mounts arm64v8/ubuntu /bin/bash -c \"cd $hpoolpath/linux-arm/ && ./hpool-chia-miner-linux-arm\" "
