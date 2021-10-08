@@ -36,3 +36,17 @@ l $MOUNTPATH"/chia/"
 # chia plots add -d $MOUNTPATH"chia/plots/"
 
 ```
+
+## Health checke
+
+```shell
+devices=$( ls -1d /dev/sd* | grep -P "sd[a-z][0-9]" )
+
+# Add drives to docker mount command
+echo $devices | while read -r device; do
+		echo -e "\nChecking $device"
+        sudo umount $device &> /dev/null
+        sudo e2fsck -y $device
+        echo "----------------------------"
+done
+```
